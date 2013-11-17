@@ -11,16 +11,34 @@
 
 
 def index():
-    """
-    example action using the internationalization operator T and flash
-    rendered by views/default/index.html or views/generic.html
+    posts = db(db.post).select()
+    return locals()
 
-    if you need a simple wiki simple replace the two lines below with:
-    return auth.wiki()
-    """
-    response.flash = T("Welcome to web2py!")
-    return dict(message=T('Hello World'))
+@auth.requires_login()
+def create_post():
+    form = SQLFORM(db.post).process()
+    return locals()
 
+def post():
+    postId = request.args(0, cast=int)
+    post = db.post(int(postId)) or redirect(URL('index'))
+
+    db.post_comment.post.default = post.id
+    form = crud.create(db.post_comment)
+
+    comments = db(db.post_comment.post==post.id).select(db.post_comment.ALL)
+    return locals()
+
+def edit_post():
+    postId = request.args(0, cast=int)
+    post = db.post(int(postId)) or redirect(URL('index'))
+    #post = db(db.post.id == postId).select() or redirect(URL('index'))
+
+    if post.created_by != auth.user.id:
+        session.flash = 'NOT ALLOWED!'
+        redirect(URL('index'))
+    form = SQLFORM(db.post, post).process()
+    return locals()
 
 def user():
     """
