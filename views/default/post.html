@@ -5,23 +5,21 @@
 
 {{=XML(expand_one(URL('download',args=post.attachment),{}))}}
 
-<div>
-   {{=A('Edit', _class='btn btn-primary', _href=URL('edit_post', args=post.id))}}
-</div>
+<p>Description: {{=post.description}}</p>
+<p>Genre: {{=post.genre}}</p>
+<p>Created: <i>{{=prettydate(post.created_on)}}</i> by <u>{{=fullname(post.created_by)}}</u> </p>
 
-Created on {{=prettydate(post.created_on)}} by {{=fullname(post.created_by)}}
-
-{{=MARKMIN(post.description)}}
+{{=A('Edit', _class='btn btn-primary', _href=URL('edit_post', args=post.id))}}
 
 <hr/>
 
-
 <h4>Discussion</h4>
- {{for comment in comments:}}
-   <blockquote>
-     {{=comment.body}}
-     <em>by {{=fullname(comment.created_by.id)}}</em>
-       <br/>
-   </blockquote>
- {{ pass }}
+{{for comment in comments:}}
+  <blockquote>
+    {{=comment.body}}
+    by {{=fullname(comment.created_by.id)}}
+    <br/>
+  </blockquote>
+{{ pass }}
+
 {{=form}}
