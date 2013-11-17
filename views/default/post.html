@@ -1,0 +1,27 @@
+{{extend 'layout.html'}}
+{{from gluon.contrib.autolinks import expand_one}}
+
+<h2>{{=post.title}}</h2>
+
+{{=XML(expand_one(URL('download',args=post.attachment),{}))}}
+
+<div>
+   {{=A('Edit', _class='btn btn-primary', _href=URL('edit_post', args=post.id))}}
+</div>
+
+Created on {{=prettydate(post.created_on)}} by {{=fullname(post.created_by)}}
+
+{{=MARKMIN(post.description)}}
+
+<hr/>
+
+
+<h4>Discussion</h4>
+ {{for comment in comments:}}
+   <blockquote>
+     {{=comment.body}}
+     <em>by {{=fullname(comment.created_by.id)}}</em>
+       <br/>
+   </blockquote>
+ {{ pass }}
+{{=form}}
