@@ -9,6 +9,8 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
+# test comment
+
 
 def index():
     posts = db(db.post).select()
