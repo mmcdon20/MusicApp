@@ -29,6 +29,7 @@ def post():
     comments = db(db.post_comment.post==post.id).select(db.post_comment.ALL)
     return locals()
 
+@auth.requires_login()
 def edit_post():
     postId = request.args(0, cast=int)
     post = db.post(int(postId)) or redirect(URL('index'))
