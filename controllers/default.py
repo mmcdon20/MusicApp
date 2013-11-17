@@ -12,6 +12,7 @@
 
 def index():
     posts = db(db.post).select()
+    # Test github
     return locals()
 
 @auth.requires_login()
