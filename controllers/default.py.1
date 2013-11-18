@@ -11,30 +11,9 @@
 
 
 def index():
-    posts = db(db.post).select(orderby=~db.post.created_on)
-    return locals()
-
-def search():
-    query = request.args(0)  
-    form = SQLFORM.factory(
-                   Field('query','string', default = query),
-                   submit_button='Search')
-    
-    if query:
-        results = db(db.post.title.contains(query)|
-                     db.post.description.contains(query)|
-                     db.post.genre.contains(query)).select()
-    else:
-        results = None
-    
-    if form.process().accepted:
-        redirect(URL("search", args=form.vars.query)) 
-    
-    return locals()
-
-def genre():
-    genre = request.args(0)
-    posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
+    posts = db(db.post).select()
+    # Test github
+    # FUCK YOU GITHUB!!!
     return locals()
 
 @auth.requires_login()
@@ -59,7 +38,7 @@ def edit_post():
     #post = db(db.post.id == postId).select() or redirect(URL('index'))
 
     if post.created_by != auth.user.id:
-        response.flash = 'NOT ALLOWED!'
+        session.flash = 'NOT ALLOWED!'
         redirect(URL('index'))
     form = SQLFORM(db.post, post).process()
     return locals()
