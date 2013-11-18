@@ -6,7 +6,7 @@
 #########################################################################
 
 response.logo = A(B('jam',SPAN('Tunes')),
-                  _class="brand",_href='index')
+                  _class="brand",_href=URL('index'))
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
@@ -27,23 +27,23 @@ def _setupTuneMenu():
     genreList = []
     
     for genre in GENRES:
-        toAdd = (genre, False, URL('default', 'genre', args=genre))
+        toAdd = (genre, False, URL('genre', args=genre))
         genreList.append(toAdd)
     
-    response.menu += [(SPAN('Tunes', _class='highlighted'), False, 'index', genreList)]
+    response.menu += [(SPAN('Tunes', _class='highlighted'), False, URL('index'), genreList)]
 
 def _setupMainMenu():
     response.menu += [
-        (T('Search'), False, URL('default', 'search'), []),
-        (T('About'), False, URL('default', 'about'), [])
+        (T('Search'), False, URL('search'), []),
+        (T('About'), False, URL('about'), [])
     ]
 
 def _setupAuthMenu():
     response.menu += [
         ('|', False, '', []),
-        (T('Profile'), False, URL('default', 'profile'), []),
-        (T('Friends'), False, URL('default', 'friends'), []),
-        (T('Upload'), False, URL('default', 'upload'), [])
+        (T('Profile'), False, URL('profile'), []),
+        (T('Friends'), False, URL('friends'), []),
+        (T('Upload'), False, URL('upload'), [])
     ]
 
 _setupTuneMenu()
