@@ -1,0 +1,9 @@
+.song-thumbnail {
+    border: 1px solid gray;
+    width: 100%;
+    height: 100%;
+    background-color: #3B4044;
+}
+.post-container audio{
+    width: 100%;
+}
