@@ -40,7 +40,7 @@ def _setupMainMenu():
 
 def _setupAuthMenu():
     response.menu += [
-        ('|', False, '', []),
+        (LI(_class="divider-vertical"), False, '', []),
         (T('Profile'), False, URL('profile'), []),
         (T('Friends'), False, URL('friends'), []),
         (T('Upload'), False, URL('upload'), [])
