@@ -14,6 +14,24 @@ def index():
     posts = db(db.post).select(orderby=~db.post.created_on)
     return locals()
 
+def search():
+    query = request.args(0)  
+    form = SQLFORM.factory(
+                   Field('query','string', default = query),
+                   submit_button='Search')
+    
+    if query:
+        results = db(db.post.title.contains(query)|
+                     db.post.description.contains(query)|
+                     db.post.genre.contains(query)).select()
+    else:
+        results = None
+    
+    if form.process().accepted:
+        redirect(URL("search", args=form.vars.query)) 
+    
+    return locals()
+
 @auth.requires_login()
 def create_post():
     form = SQLFORM(db.post).process()
