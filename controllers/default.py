@@ -19,32 +19,41 @@ def search():
     form = SQLFORM.factory(
                    Field('query','string', default = query),
                    submit_button='Search')
-    
+
     if query:
         results = db(db.post.title.contains(query)|
                      db.post.description.contains(query)|
                      db.post.genre.contains(query)).select()
     else:
         results = None
-    
+
     if form.process().accepted:
         redirect(URL("search", args=form.vars.query)) 
-    
+
     return locals()
 
 def genre():
     genre = request.args(0)
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
+
+    if not posts:
+        session.flash = "Genre '" + genre + "' does not exist"
+        redirect(URL('index'))
+
     return locals()
 
 @auth.requires_login()
-def create_post():
+def upload():
     form = SQLFORM(db.post).process()
     return locals()
 
 def post():
     postId = request.args(0, cast=int)
-    post = db.post(int(postId)) or redirect(URL('index'))
+    post = db.post(int(postId))
+
+    if not post:
+        session.flash = "Post does not exist"
+        redirect(URL('index'))
 
     db.post_comment.post.default = post.id
     form = crud.create(db.post_comment)
@@ -59,8 +68,8 @@ def edit_post():
     #post = db(db.post.id == postId).select() or redirect(URL('index'))
 
     if post.created_by != auth.user.id:
-        response.flash = 'NOT ALLOWED!'
         redirect(URL('index'))
+
     form = SQLFORM(db.post, post).process()
     return locals()
 
