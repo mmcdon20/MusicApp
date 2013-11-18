@@ -6,5 +6,11 @@
     {{=musicitem(post)}}
 {{pass}}
 
-<h3>vars</h3>
-{{=BEAUTIFY(response._vars)}}
+<h4>Discussion</h4>
+{{for comment in comments:}}
+    {{=commentitem(comment)}}
+{{ pass }}
+
+{{if auth.user:}}
+    {{=form}}
+{{pass}}

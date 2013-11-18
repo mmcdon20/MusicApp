@@ -41,6 +41,10 @@ def profile():
     uploads = db(db.post.created_by == user).select()
     friends = db(db.relationship.created_by == user).select()
     
+    db.profile_comment.post.default = user
+    form = crud.create(db.profile_comment)
+    comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)
+    
     return locals()
 
 def genre():

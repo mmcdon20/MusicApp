@@ -16,6 +16,12 @@ db.define_table('post_comment',
                 auth.signature
 )
 
+db.define_table('profile_comment',
+                Field('body', 'text', requires=IS_NOT_EMPTY()),
+                Field('post', db.post, readable=False, writable=False),
+                auth.signature
+)
+
 db.define_table('relationship',
           Field('person', 'reference auth_user'),
           Field('status', 'string', requires=IS_IN_SET(RELATION)),
@@ -27,10 +33,24 @@ def fullname(user_id):
         return "Unknown"
     return "%(first_name)s %(last_name)s" % db.auth_user(user_id)
 
+def commentitem(comment):
+    text = comment.body
+    name = fullname(comment.created_by)
+    date = prettydate(comment.created_on)
+    userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
+    
+    return XML("""
+    <blockquote>
+        """ + text + """
+        <br />
+        """ + userlink + " / " + date + """
+    </blockquote>
+    """)
+
 def musicitem(post):
     if post is None:
         return None
-    
+
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
     imageref    = URL('static', 'images/tn_placeholder.png')
@@ -40,7 +60,7 @@ def musicitem(post):
     userlink    = str(A(name,_href=URL('profile',args=post.created_by)))
     description = post.description
     attachref   = URL('download',args=post.attachment)
-    
+
     return XML("""
     <div class="row">
         <div class="span12 post-container">
@@ -49,7 +69,7 @@ def musicitem(post):
                     <a class="pull-left" href=\"""" + postref + """">
                         <img class="media-object" src=\"""" + imageref + """">
                     </a>
-                    <div class="media-body">               
+                    <div class="media-body">
                         <h4 >""" + genrelink + " / " + postlink + """</h4>
                         <h5>""" + date + " | Posted by " + userlink + """</h5>
                         <p>""" + description + """</p>

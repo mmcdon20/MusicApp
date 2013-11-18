@@ -9,11 +9,7 @@
 
 <h4>Discussion</h4>
 {{for comment in comments:}}
-  <blockquote>
-    {{=comment.body}}
-    by {{=fullname(comment.created_by.id)}}
-    <br/>
-  </blockquote>
+    {{=commentitem(comment)}}
 {{ pass }}
 
 {{if auth.user:}}
