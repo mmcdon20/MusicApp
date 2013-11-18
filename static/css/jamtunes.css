@@ -1,9 +1,29 @@
-.song-thumbnail {
+.post-container li {
+    padding: 6px;
     border: 1px solid gray;
-    width: 100%;
-    height: 100%;
-    background-color: #3B4044;
 }
-.post-container audio{
+
+.post-container .media-body {
+    position: relative;
+    height: 150px;
+}
+
+li.media h4 {
+    margin: 0 0 3px 0
+}
+
+li.media h5 {
+    margin: 0 0 5px 0;
+}
+
+li.media p {
+    margin: 0 0 5px 0;
+    max-height: 65px;
+    overflow: hidden;
+}
+
+li.media audio {
     width: 100%;
+    position: absolute;
+    bottom: 0;
 }
