@@ -16,4 +16,6 @@
   </blockquote>
 {{ pass }}
 
-{{=form}}
+{{if auth.user:}}
+    {{=form}}
+{{pass}}
