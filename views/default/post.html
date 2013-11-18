@@ -3,13 +3,7 @@
 
 <h2>{{=post.title}}</h2>
 
-{{=XML(expand_one(URL('download',args=post.attachment),{}))}}
-
-<p>Description: {{=post.description}}</p>
-<p>Genre: {{=post.genre}}</p>
-<p>Created: <i>{{=prettydate(post.created_on)}}</i> by <u>{{=fullname(post.created_by)}}</u> </p>
-
-{{=A('Edit', _class='btn btn-primary', _href=URL('edit_post', args=post.id))}}
+{{=musicitem(post)}}
 
 <hr/>
 

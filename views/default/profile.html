@@ -1,3 +1,10 @@
 {{extend 'layout.html'}}
-<h1>This is the default/profile.html template</h1>
+<h1>{{=fullname(user)}}</h1>
+
+<h3>Uploads</h3>
+{{for post in uploads:}}
+    {{=musicitem(post)}}
+{{pass}}
+
+<h3>vars</h3>
 {{=BEAUTIFY(response._vars)}}

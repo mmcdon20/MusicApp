@@ -12,26 +12,7 @@
 <br/>
 
 <!-- Post Area ======================================================-->
-<div class="row">
-    <div class="span10 offset1 post-container">
-        <ul class="media-list">
-            {{for post in posts:}}
-            <li class="media">
-                <a class="pull-left" href="{{=URL('post',args=post.id)}}">
-                    <img class="media-object" src="{{=URL('static', 'images/tn_placeholder.png')}}">
-                </a>
-                <div class="media-body">
-                    <h4 >{{=A(post.genre, _href=URL('genre/' + post.genre))}} / {{=A(post.title, _href=URL('post',args=post.id))}}</h4>
-                    <h5>{{=prettydate(post.created_on)}} | Posted by {{=A(fullname(post.created_by),_href=URL('profile/' + str(post.created_by)))}}</h5>
-                    <p>{{=post.description}}</p>
-                    <audio controls="controls" style="max-width:100%">
-                        <source src="{{=URL('download',args=post.attachment)}}">
-                    </audio>
-                </div>
-            </li>
-            {{pass}}
-        </ul>
-    </div>
-</div>
 
-<a href="{{=URL('upload')}}" class="btn btn-primary">Upload</a>
+{{for post in posts:}}
+    {{=musicitem(post)}}
+{{pass}}
