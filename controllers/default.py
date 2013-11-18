@@ -11,9 +11,7 @@
 
 
 def index():
-    posts = db(db.post).select()
-    # Test github
-    # FUCK YOU GITHUB!!!
+    posts = db(db.post).select(orderby=~db.post.created_on)
     return locals()
 
 @auth.requires_login()
