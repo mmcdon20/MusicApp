@@ -17,7 +17,7 @@ db.define_table('post_comment',
 )
 
 db.define_table('relationship',
-          Field('person'),
+          Field('person', 'reference auth_user'),
           Field('status', 'string', requires=IS_IN_SET(RELATION)),
           auth.signature
 )
