@@ -19,21 +19,7 @@ response.meta.generator = 'Web2py Web Framework'
 ## your http://google.com/analytics id
 response.google_analytics_id = None
 
-#########################################################################
-## this is the main application menu add/remove items as required
-#########################################################################
-
-response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
-]
-
-DEVELOPMENT_MENU = True
-
-#########################################################################
-## provide shortcuts for development. remove in production
-#########################################################################
-
-def _():
+def _setupTuneMenu():
     # shortcuts
     app = request.application
     ctr = request.controller
@@ -135,6 +121,23 @@ def _():
                         ])
                 ]
          )]
-if DEVELOPMENT_MENU: _()
 
-if "auth" in locals(): auth.wikimenu() 
+def _setupMainMenu():
+    response.menu += [
+        (T('Search'), False, URL('default', 'search'), []),
+        (T('About'), False, URL('default', 'about'), [])
+    ]
+
+def _setupAuthMenu():
+    response.menu += [
+        ('|', False, URL(), []),
+        (T('Profile'), False, URL('default', 'profile'), []),
+        (T('Friends'), False, URL('default', 'friends'), []),
+        (T('Upload'), False, URL('default', 'upload'), [])
+    ]
+
+_setupTuneMenu()
+_setupMainMenu()
+if auth.user:
+    _setupAuthMenu()
+if "auth" in locals(): auth.wikimenu()

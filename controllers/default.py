@@ -38,7 +38,7 @@ def edit_post():
     #post = db(db.post.id == postId).select() or redirect(URL('index'))
 
     if post.created_by != auth.user.id:
-        session.flash = 'NOT ALLOWED!'
+        response.flash = 'NOT ALLOWED!'
         redirect(URL('index'))
     form = SQLFORM(db.post, post).process()
     return locals()
