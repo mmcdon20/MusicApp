@@ -32,6 +32,17 @@ def search():
     
     return locals()
 
+def profile():
+    if request.args:
+        user = request.args(0, cast=int)
+    else:
+        redirect(URL("profile", args=auth.user.id))
+    
+    uploads = db(db.post.created_by == user).select()
+    friends = db(db.relationship.created_by == user).select()
+    
+    return locals()
+
 def genre():
     genre = request.args(0)
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
