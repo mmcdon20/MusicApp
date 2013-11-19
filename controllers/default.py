@@ -37,14 +37,23 @@ def profile():
         user = request.args(0, cast=int)
     else:
         redirect(URL("profile", args=auth.user.id))
-    
+
     uploads = db(db.post.created_by == user).select()
     friends = db(db.relationship.created_by == user).select()
     
-    db.profile_comment.post.default = user
-    form = crud.create(db.profile_comment)
-    comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)
-    
+    #fake fields
+    totalLikes = 1337
+    totalUploads = 69
+    userStatus = "Today is a good day for music in the nude!"
+    age = 25
+    gender = "Male"
+    location = "Chicago, IL"
+    genres = "Rap, Electronic, Classic Rock, Blues"
+    joined = "3/25/2013"
+    #db.profile_comment.post.default = user
+    #form = crud.create(db.profile_comment)
+    #comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)
+
     return locals()
 
 def genre():

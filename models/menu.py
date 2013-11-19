@@ -23,13 +23,13 @@ def _setupTuneMenu():
     # shortcuts
     app = request.application
     ctr = request.controller
-    
+
     genreList = []
-    
+
     for genre in GENRES:
         toAdd = (genre, False, URL('genre', args=genre))
         genreList.append(toAdd)
-    
+
     response.menu += [(SPAN('Tunes', _class='highlighted'), False, URL('index'), genreList)]
 
 def _setupMainMenu():
