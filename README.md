@@ -8,4 +8,4 @@ Google Group
 https://groups.google.com/forum/#!forum/web-frameworks-final
 
 Pythonanywhere
-https://akrautmann.pythonanywhere.com/MusicApp/default/index
+https://akrautmann.pythonanywhere.com/jamTunes/default/index
