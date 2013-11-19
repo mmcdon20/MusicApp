@@ -79,10 +79,11 @@ def post():
         session.flash = "Post does not exist"
         redirect(URL('index'))
 
-    db.post_comment.post.default = post.id
-    form = crud.create(db.post_comment)
+    db.comment_item.item_id.default = post.id
+    db.comment_item.item_type.default = 'post'
+    form = crud.create(db.comment_item)
 
-    comments = db(db.post_comment.post==post.id).select(db.post_comment.ALL)
+    comments = db((db.comment_item.item_id==post.id) and (db.comment_item.item_type=='post')).select()
     return locals()
 
 @auth.requires_login()

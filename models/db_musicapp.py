@@ -10,15 +10,10 @@ db.define_table('post',
                 auth.signature
 )
 
-db.define_table('post_comment',
+db.define_table('comment_item',
                 Field('body', 'text', requires=IS_NOT_EMPTY()),
-                Field('post', db.post, readable=False, writable=False),
-                auth.signature
-)
-
-db.define_table('profile_comment',
-                Field('body', 'text', requires=IS_NOT_EMPTY()),
-                Field('post', db.post, readable=False, writable=False),
+                Field('item_id', 'integer', readable=False, writable=False),
+                Field('item_type', 'text', readable=False, writable=False, requires=IS_IN_SET(['post','profile'])),
                 auth.signature
 )
 
