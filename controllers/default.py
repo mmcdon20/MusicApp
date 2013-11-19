@@ -87,7 +87,7 @@ def post():
     db.comment_item.item_type.default = 'post'
     form = crud.create(db.comment_item)
 
-    comments = db((db.comment_item.item_id==post.id) and (db.comment_item.item_type=='post')).select()
+    comments = db((db.comment_item.item_id==post.id) & (db.comment_item.item_type=='post')).select()
     return locals()
 
 @auth.requires_login()
