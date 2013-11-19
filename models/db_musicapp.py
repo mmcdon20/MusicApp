@@ -28,6 +28,11 @@ db.define_table('relationship',
           auth.signature
 )
 
+db.define_table('post_like',
+          Field('post', db.post, readable=False, writable=False),
+          auth.signature
+)
+
 def fullname(user_id):
     if user_id is None:
         return "Unknown"
