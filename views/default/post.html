@@ -3,7 +3,11 @@
 
 <h2>{{=post.title}}</h2>
 
-{{=musicitem(post)}}
+<div class="row">
+    <div class="span12 post-container">
+        {{=XML(musicitem(post))}}
+    </div>
+</div>
 
 <hr/>
 
