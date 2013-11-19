@@ -12,7 +12,8 @@
 <br/>
 
 <!-- Post Area ======================================================-->
-
-{{for post in posts:}}
-    {{=musicitem(post)}}
-{{pass}}
+<div class="row">
+    <div class="span10 offset1 post-container">
+        {{=musicItemList(posts)}}
+    </div>
+</div>

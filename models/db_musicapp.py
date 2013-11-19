@@ -48,8 +48,6 @@ def commentitem(comment):
     """)
 
 def musicitem(post):
-    if post is None:
-        return None
 
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
@@ -61,24 +59,28 @@ def musicitem(post):
     description = post.description
     attachref   = URL('download',args=post.attachment)
 
-    return XML("""
-    <div class="row">
-        <div class="span12 post-container">
-            <ul class="media-list">
-                <li class="media">
-                    <a class="pull-left" href=\"""" + postref + """">
-                        <img class="media-object" src=\"""" + imageref + """">
-                    </a>
-                    <div class="media-body">
-                        <h4 >""" + genrelink + " / " + postlink + """</h4>
-                        <h5>""" + date + " | Posted by " + userlink + """</h5>
-                        <p>""" + description + """</p>
-                        <audio controls="controls" style="max-width:100%">
-                            <source src=\"""" + attachref + """">
-                        </audio>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-    """)
+    return """
+            <li class="media">
+                <a class="pull-left" href=\"""" + postref + """">
+                    <img class="media-object" src=\"""" + imageref + """">
+                </a>
+                <div class="media-body">
+                    <h4 >""" + genrelink + " / " + postlink + """</h4>
+                    <h5>""" + date + " | Posted by " + userlink + """</h5>
+                    <p>""" + description + """</p>
+                    <audio controls="controls" style="max-width:100%">
+                        <source src=\"""" + attachref + """">
+                    </audio>
+                </div>
+            </li>
+    """
+
+def musicItemList(posts):
+    x = '<ul class="media-list">'
+
+    for post in posts:
+        x += musicitem(post)
+
+    x += '</ul>'
+
+    return XML(x)
