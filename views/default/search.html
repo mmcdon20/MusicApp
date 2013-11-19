@@ -5,7 +5,9 @@
 
 {{if results:}}
     <h3>Results</h3>
-    {{for post in results:}}
-        {{=musicitem(post)}}
-    {{pass}}
+    <div class="row">
+        <div class="span12 post-container">
+            {{=musicItemList(results)}}
+        </div>
+    </div>
 {{pass}}

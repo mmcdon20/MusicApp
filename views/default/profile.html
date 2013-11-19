@@ -2,9 +2,11 @@
 <h1>{{=fullname(user)}}</h1>
 
 <h3>Uploads</h3>
-{{for post in uploads:}}
-    {{=musicitem(post)}}
-{{pass}}
+<div class="row">
+    <div class="span12 post-container">
+        {{=musicItemList(uploads)}}
+    </div>
+</div>
 
 <h4>Discussion</h4>
 {{for comment in comments:}}
