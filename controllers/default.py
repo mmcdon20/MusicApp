@@ -68,7 +68,11 @@ def genre():
 
 @auth.requires_login()
 def upload():
-    form = SQLFORM(db.post).process()
+    form = SQLFORM(db.post)
+    
+    if form.process().accepted:
+        redirect(URL("post", args=form.vars.id)) 
+    
     return locals()
 
 def post():
