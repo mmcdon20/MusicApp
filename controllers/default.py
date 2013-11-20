@@ -52,7 +52,6 @@ def profile():
 
     #fake fields
     totalLikes = 1337
-    userStatus = "Today is a good day for music in the nude!"
 
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)

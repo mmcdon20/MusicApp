@@ -50,6 +50,7 @@ auth.settings.extra_fields['auth_user']= [
   Field('birthdate', 'date'),
   Field('user_location', 'string'),
   Field('genres', 'string'),
+  Field('status', 'string'),
   Field('picture', 'upload', requires = IS_UPLOAD_FILENAME(extension='jpg|jpeg|png'))
   ]
 auth.define_tables(username=False, signature=True)
