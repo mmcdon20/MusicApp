@@ -16,7 +16,7 @@ def index():
 
 def register():
 
-    form=auth.register() or session.flash = 'Rejected'
+    form = auth.register()
 
 
     return locals()
