@@ -1,13 +1,23 @@
 {{extend 'layout.html'}}
-<h1>Search</h1>
-{{=form}}
-<hr />
-
-{{if results:}}
-    <h3>Results</h3>
-    <div class="row">
-        <div class="span12 post-container">
-            {{=musicItemList(results)}}
+<!-- Top Info area -->
+<div class="row">
+    <div class="span12 info-header">
+        <div class="info-content">
+            <h3>Search</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac diam massa. Cras pretium ultrices enim, et sodales purus gravida eu. Sed vel magna venenatis, mattis nisl in, pharetra sapien. Nunc feugiat erat pulvinar diam fermentum bibendum et vel lorem.
+            </p>
+            {{=form}}
         </div>
     </div>
-{{pass}}
+</div>
+
+<!-- Content area -->
+<div class="row">
+    <div class="span12 post-container">
+        {{if results:}}
+            <h3>Results</h3>
+            {{=musicItemList(results)}}
+        {{pass}}
+    </div>
+</div>

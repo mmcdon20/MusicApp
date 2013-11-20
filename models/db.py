@@ -44,14 +44,14 @@ auth = Auth(db)
 crud, service, plugins = Crud(db), Service(), PluginManager()
 
 ## create all tables needed by auth if not custom tables
-GENDERS=['Male', 'Female']
+GENDERS=['Male', 'Female', '']
 auth.settings.extra_fields['auth_user']= [
   Field('gender', 'string', requires=IS_IN_SET(GENDERS)),
   Field('birthdate', 'date'),
   Field('user_location', 'string'),
   Field('genres', 'string'),
   Field('status', 'string'),
-  Field('picture', 'upload', requires = IS_UPLOAD_FILENAME(extension='jpg|jpeg|png'))
+  Field( 'picture', 'upload', requires=IS_IMAGE(extensions=('jpeg', 'png', 'jpg', '')) )
   ]
 auth.define_tables(username=False, signature=True)
 
