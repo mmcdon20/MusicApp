@@ -8,9 +8,9 @@
                 <div class="prof-left">
                     <h3 class="center">{{=fullname(userId)}}</h3>
                     {{if user.picture:}}
-                        <img src="{{=URL('download', args=user.picture)}}" alt="{{=fullname(userId)}}" height="150" width="150">
+                        <img src="{{=URL('download', args=user.picture)}}" alt="{{=fullname(userId)}}">
                     {{else:}}
-                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(userId)}}" height="150" width="150">
+                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(userId)}}">
                     {{pass}}
                 </div>
             </div>
