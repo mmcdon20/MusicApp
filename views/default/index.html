@@ -1,17 +1,17 @@
-{{left_sidebar_enabled,right_sidebar_enabled=False,('message' in globals())}}
 {{extend 'layout.html'}}
-
-<!-- Top Welcome Box ================================================-->
+<!-- Top Info area -->
 <div class="row">
-    <div class="span12">
-        <h3>Welcome to jamTunes!</h3>
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.</p>
+    <div class="span12 info-header">
+        <div class="info-content">
+            <h3>Welcome to jamTunes!</h3>
+            <p>
+                           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac diam massa. Cras pretium ultrices enim, et sodales purus gravida eu. Sed vel magna venenatis, mattis nisl in, pharetra sapien. Nunc feugiat erat pulvinar diam fermentum bibendum et vel lorem.
+            </p>
+        </div>
     </div>
 </div>
 
-<br/>
-
-<!-- Post Area ======================================================-->
+<!-- Content area -->
 <div class="row">
     <div class="span12 post-container">
         {{=musicItemList(posts)}}

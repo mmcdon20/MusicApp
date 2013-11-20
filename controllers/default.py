@@ -14,6 +14,13 @@ def index():
     posts = db(db.post).select(orderby=~db.post.created_on)
     return locals()
 
+def register():
+
+    form=auth.register() or session.flash = 'Rejected'
+
+
+    return locals()
+
 def search():
     query = request.args(0)
     form = SQLFORM.factory(
@@ -48,11 +55,9 @@ def profile():
 
     # Calculated Profile Fields
     age = prettydate(user.birthdate).replace(' years ago', '') # TODO: better!
-    totalUploads = len(db(db.post.created_by == userId).select())
 
     #fake fields
     totalLikes = 1337
-    userStatus = "Today is a good day for music in the nude!"
 
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)

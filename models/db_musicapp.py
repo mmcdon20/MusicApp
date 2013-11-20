@@ -1,6 +1,7 @@
 # coding: utf8
 GENRES=['Classic Rock', 'Rap', 'Pop', 'Classical', 'Blues', 'Jazz', 'Metal', 'Punk', 'Electronic']
 RELATION=['friend', 'request', 'block']
+GENDERS=['Male', 'Female']
 
 db.define_table('post',
                 Field('title', 'string', requires=IS_NOT_EMPTY()),
@@ -19,14 +20,14 @@ db.define_table('comment_item',
 )
 
 db.define_table('relationship',
-          Field('person', 'reference auth_user'),
-          Field('status', 'string', requires=IS_IN_SET(RELATION)),
-          auth.signature
+                Field('person', 'reference auth_user'),
+                Field('status', 'string', requires=IS_IN_SET(RELATION)),
+                auth.signature
 )
 
 db.define_table('post_like',
-          Field('post', db.post, readable=False, writable=False),
-          auth.signature
+                Field('post', db.post, readable=False, writable=False),
+                 auth.signature
 )
 
 def fullname(user_id):

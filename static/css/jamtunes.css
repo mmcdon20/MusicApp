@@ -29,11 +29,9 @@
     bottom: 0;
 }
 
+
+/* START Profile Page Style ========================================= */
 .prof-header {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    margin-bottom: 30px;
     min-height: 250px;
 }
 
@@ -42,7 +40,11 @@
     margin-bottom: 0;
 }
 
-.prof-header h3, .prof-header table{
+.prof-header h3 {
+    margin-top:0;
+}
+
+.prof-header table{
     margin-top:0;
 }
 
@@ -65,10 +67,31 @@ div.status h3 {
     font-weight: normal;
 }
 
-div.user-stats {
-    /*min-height: 100px;*/
-}
-
 div.user-stats h3, div.user-stats h4 {
     text-align: center;
 }
+/* END Profile Page Style ========================================= */
+
+
+.info-header {
+    border-bottom: 1px solid gray;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    margin-bottom: 30px;
+}
+
+.info-content {
+    padding: 15px;
+}
+
+.info-content > p{
+    font-size: 18px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    color: #494948;
+}
+
+div.content {
+    padding: 10px;
+}
+
+/* Register Page CSS (Maybe some more general?) */
