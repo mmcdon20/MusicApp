@@ -18,7 +18,6 @@ def register():
 
     form = auth.register()
 
-
     return locals()
 
 def search():
