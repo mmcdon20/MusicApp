@@ -71,6 +71,9 @@ auth.settings.reset_password_requires_verification = True
 from gluon.contrib.login_methods.rpx_account import use_janrain
 use_janrain(auth, filename='private/janrain.key')
 
+## THIS IS FOR OUR CUSTOM NAVBAR MODULE!!!
+import custom_navbar_layout as custom
+
 #########################################################################
 ## Define your tables below (or better in another model file) for example
 ##
