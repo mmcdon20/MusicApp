@@ -39,13 +39,22 @@ def commentitem(comment):
     name = fullname(comment.created_by)
     date = prettydate(comment.created_on)
     userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
+    if db.auth_user(comment.created_by).picture:
+        imageref = URL('download', args=db.auth_user(comment.created_by).picture)
+    else:
+        imageref = URL('static', 'images/user_placeholder.jpg')
 
     return XML("""
-    <blockquote>
-        """ + text + """
-        <br />
-        """ + userlink + " / " + date + """
-    </blockquote>
+        <li class="media">
+            <div class="pull-left">
+                <img class="media-object" height="50" width="50" src=\"""" + imageref + """" />
+            </div>
+            <div class="media-body">
+                """ + text + """
+                <br />
+                """ + userlink + " / " + date + """
+            </div>
+        </li>
     """)
 
 def musicitem(post):
@@ -60,7 +69,7 @@ def musicitem(post):
     description = post.description
     attachref   = URL('download',args=post.attachment)
 
-    return """
+    return XML("""
             <li class="media">
                 <a class="pull-left" href=\"""" + postref + """">
                     <img class="media-object" src=\"""" + imageref + """">
@@ -74,13 +83,23 @@ def musicitem(post):
                     </audio>
                 </div>
             </li>
-    """
+    """)
 
 def musicItemList(posts):
     x = '<ul class="media-list">'
 
     for post in posts:
         x += musicitem(post)
+
+    x += '</ul>'
+
+    return XML(x)
+
+def commentItemList(comments):
+    x = '<ul class="media-list">'
+
+    for comment in comments:
+        x += commentitem(comment)
 
     x += '</ul>'
 
