@@ -12,8 +12,12 @@ db.define_table('post',
 
 db.define_table('comment_item',
                 Field('body', 'text', requires=IS_NOT_EMPTY()),
+<<<<<<< HEAD
                 Field('item_id', 'integer', readable=False, writable=False),
                 Field('item_type', 'text', readable=False, writable=False, requires=IS_IN_SET(['post','profile'])),
+=======
+                Field('post', db.post, readable=False, writable=False),
+>>>>>>> a34fa3b65af0e240445add0af342fb8d3338c3a1
                 auth.signature
 )
 
@@ -38,7 +42,7 @@ def commentitem(comment):
     name = fullname(comment.created_by)
     date = prettydate(comment.created_on)
     userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
-    
+
     return XML("""
     <blockquote>
         """ + text + """

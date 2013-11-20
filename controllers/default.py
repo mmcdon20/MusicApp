@@ -15,7 +15,7 @@ def index():
     return locals()
 
 def search():
-    query = request.args(0)  
+    query = request.args(0)
     form = SQLFORM.factory(
                    Field('query','string', default = query),
                    submit_button='Search')
@@ -28,28 +28,32 @@ def search():
         results = None
 
     if form.process().accepted:
-        redirect(URL("search", args=form.vars.query)) 
+        redirect(URL("search", args=form.vars.query))
 
     return locals()
 
 def profile():
+    userId = 0
     if request.args:
-        user = request.args(0, cast=int)
+        userId = request.args(0, cast=int)
+        if db.auth_user(userId) is None:
+            session.flash = "User not found!"
+            redirect(URL('index'))
     else:
         redirect(URL("profile", args=auth.user.id))
 
-    uploads = db(db.post.created_by == user).select()
-    friends = db(db.relationship.created_by == user).select()
-    
+    user = db.auth_user(userId)
+    uploads = db(db.post.created_by == userId).select()
+    friends = db(db.relationship.created_by == userId).select()
+
+    # Calculated Profile Fields
+    age = prettydate(user.birthdate).replace(' years ago', '') # TODO: better!
+    totalUploads = len(db(db.post.created_by == userId).select())
+
     #fake fields
     totalLikes = 1337
-    totalUploads = 69
     userStatus = "Today is a good day for music in the nude!"
-    age = 25
-    gender = "Male"
-    location = "Chicago, IL"
-    genres = "Rap, Electronic, Classic Rock, Blues"
-    joined = "3/25/2013"
+
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)
     #comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)

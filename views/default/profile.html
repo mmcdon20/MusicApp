@@ -6,7 +6,7 @@
         <div class="row">
             <div class="span3">
                 <div class="prof-left">
-                    <h3 class="center">{{=fullname(user)}}</h3>
+                    <h3 class="center">{{=fullname(userId)}}</h3>
                     <img src="{{=URL('static', 'images/user_placeholder.jpg')}}">
                 </div>
             </div>
@@ -14,11 +14,11 @@
                 <div class="prof-center">
                     <table class="table">
                         <tr><th>Information</th></tr>
-                        <tr><td>Joined: {{=joined}}</td></tr>
+                        <tr><td>Joined: {{=prettydate(user.created_on)}}</td></tr>
                         <tr><td>Age: {{=age}}</td></tr>
-                        <tr><td>Gender: {{=gender}}</td></tr>
-                        <tr><td>Location: {{=location}}</td></tr>
-                        <tr><td>Genres: {{=genres}}</td></tr>
+                        <tr><td>Gender: {{=user.gender}}</td></tr>
+                        <tr><td>Location: {{=user.user_location}}</td></tr>
+                        <tr><td>Genres: {{=user.genres}}</td></tr>
                     </table>
                 </div>
             </div>
