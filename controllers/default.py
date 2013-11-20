@@ -22,17 +22,19 @@ def register():
 
 def search():
     query = request.args(0)
-    form = SQLFORM.factory(
-                   Field('query','string', default = query),
-                   submit_button='Search')
 
     if query:
+        query = query.replace('_',' ')
         results = db(db.post.title.contains(query)|
                      db.post.description.contains(query)|
                      db.post.genre.contains(query)).select()
     else:
         results = None
 
+    form = SQLFORM.factory(
+                   Field('query','string', default = query),
+                   submit_button='Search')
+        
     if form.process().accepted:
         redirect(URL("search", args=form.vars.query))
 
@@ -65,7 +67,7 @@ def profile():
     return locals()
 
 def genre():
-    genre = request.args(0)
+    genre = request.args(0).replace('_',' ')
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
 
     if not posts:
