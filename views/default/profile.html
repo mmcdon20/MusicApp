@@ -7,7 +7,11 @@
             <div class="span3">
                 <div class="prof-left">
                     <h3 class="center">{{=fullname(userId)}}</h3>
-                    <img src="{{=URL('static', 'images/user_placeholder.jpg')}}">
+                    {{if user.picture:}}
+                        <img src="{{=URL('download', args=user.picture)}}" alt="{{=fullname(userId)}}" height="150" width="150">
+                    {{else:}}
+                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(userId)}}" height="150" width="150">
+                    {{pass}}
                 </div>
             </div>
             <div class="span3">
