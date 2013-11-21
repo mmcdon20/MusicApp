@@ -19,7 +19,7 @@
                     <table class="table">
                         <tr>
                             <th colspan="2">Information 
-                            {{if auth.user:}}<a href="#editModal" role="button" data-toggle="modal">Edit</a>{{pass}}
+                            {{if auth.user.id == userId:}}<a href="#editModal" role="button" data-toggle="modal">Edit</a>{{pass}}
                             </th>
                         </tr>
                         <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
