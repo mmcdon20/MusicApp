@@ -17,7 +17,11 @@
             <div class="span3">
                 <div class="prof-center">
                     <table class="table">
-                        <tr><th>Information</th></tr>
+                        <tr>
+                            <th>Information 
+                            {{if auth.user:}}<a href="#editModal" role="button" data-toggle="modal">Edit</a>{{pass}}
+                            </th>
+                        </tr>
                         <tr><td>Joined: {{=prettydate(user.created_on)}}</td></tr>
                         <tr><td>Age: {{=age}}</td></tr>
                         <tr><td>Gender: {{=user.gender}}</td></tr>
@@ -60,3 +64,28 @@
         {{=musicItemList(uploads)}}
     </div>
 </div>
+
+<!-- Edit profile modal -->
+<!-- Modal -->
+{{if auth.user:}}
+    <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {{=editForm.custom.begin}}
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Edit your profile</h3>
+        </div>
+        <div class="modal-body">
+            First Name: <div>{{=editForm.custom.widget.first_name}}</div>
+            Last Name: <div>{{=editForm.custom.widget.last_name}}</div>
+            Birthdate: <div>{{=editForm.custom.widget.birthdate}}</div>
+            Gender: <div>{{=editForm.custom.widget.gender}}</div>
+            Location: <div>{{=editForm.custom.widget.user_location}}</div>
+            Genres: <div>{{=editForm.custom.widget.genres}}</div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            {{=editForm.custom.submit}}
+        </div>
+        {{=editForm.custom.end}}
+    </div>
+{{pass}}

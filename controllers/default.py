@@ -60,6 +60,18 @@ def profile():
     #fake fields
     totalLikes = 1337
 
+    # Create edit profile form TODO: move to a function
+    if auth.user:
+        editForm = SQLFORM(db.auth_user,
+            record = db.auth_user(auth.user.id) or redirect(URL('index')),
+            fields = ['first_name', 'last_name', 'birthdate', 'gender', 'user_location', 'genres', 'picture'],
+            submit_button = 'Save Changes'
+        )
+        editForm.custom.submit['_class'] = 'btn-primary'
+        if editForm.process().accepted:
+            redirect(URL('profile', args=auth.user.id))
+
+
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)
     #comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)
