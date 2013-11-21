@@ -1,0 +1,20 @@
+{{extend 'layout.html'}}
+
+<div class="row">
+    <div class="span12 prof-header info-header">
+        <h1 class="center">Friends of {{=fullname(auth.user.id)}}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4">
+        <div class="friend-container">
+            {{=personItemList(friendRelations, auth.user.id)}}
+        </div>
+    </div>
+    <div class="span8 post-container">
+        {{=musicItemList(friendUploads)}}
+    </div>
+</div>
+
+{{=friendIds}}

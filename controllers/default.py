@@ -92,6 +92,26 @@ def profile():
 
     return locals()
 
+@auth.requires_login()
+def friends():
+    userId = auth.user.id
+    friendRelations = db(db.relationship.created_by == userId).select()
+    friendRelations = friendRelations & db(db.relationship.person == userId).select()
+    friendIds = set()
+    
+    for friend in friendRelations:
+        if friend.created_by == auth.user.id:
+            friendIds.add(friend.person)
+        else:
+            friendIds.add(friend.created_by)
+    
+    friendUploads = db(db.post.created_by == 0).select()
+    
+    for friend in friendIds:
+        friendUploads = friendUploads & db(db.post.created_by == int(friend)).select(orderby=~db.post.created_on)
+    
+    return locals()
+
 def genre():
     genre = request.args(0).replace('_',' ')
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
