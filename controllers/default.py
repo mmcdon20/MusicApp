@@ -14,6 +14,10 @@ def index():
     posts = db(db.post).select(orderby=~db.post.created_on)
     return locals()
 
+def about():
+    db.relationship.delete(7)
+    return locals()
+
 def register():
 
     form = auth.register()
@@ -34,12 +38,15 @@ def search():
     form = SQLFORM.factory(
                    Field('query','string', default = query),
                    submit_button='Search')
-        
+
+    form.custom.submit['_class'] = 'btn-primary'
+
     if form.process().accepted:
         redirect(URL("search", args=form.vars.query))
 
     return locals()
 
+# This func is getting ugly, prob want to break it down eventually
 def profile():
     userId = 0
     if request.args:
@@ -52,7 +59,7 @@ def profile():
 
     user = db.auth_user(userId)
     uploads = db(db.post.created_by == userId).select()
-    friends = db(db.relationship.created_by == userId).select()
+    friendRelations = db(db.relationship.created_by == userId).select()
 
     # Calculated Profile Fields
     age = prettydate(user.birthdate).replace(' years ago', '') # TODO: better!
@@ -71,6 +78,12 @@ def profile():
         if editForm.process().accepted:
             redirect(URL('profile', args=auth.user.id))
 
+    # IF logged in and this profile is not me, find relation ID for use in view
+    relationId = 0
+    if userId != auth.user.id:
+        rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
+        if len(rows) > 0:
+            relationId = rows[0].id
 
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)
@@ -176,3 +189,11 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
+
+def addFriend():
+    db.relationship.insert(person=request.post_vars.person, status=request.post_vars.status)
+    return locals()
+
+def removeFriend():
+    db(db.relationship.id == request.post_vars.rid).delete()
+    return locals()

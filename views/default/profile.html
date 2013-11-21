@@ -18,15 +18,15 @@
                 <div class="prof-center">
                     <table class="table">
                         <tr>
-                            <th>Information 
+                            <th colspan="2">Information 
                             {{if auth.user:}}<a href="#editModal" role="button" data-toggle="modal">Edit</a>{{pass}}
                             </th>
                         </tr>
-                        <tr><td>Joined: {{=prettydate(user.created_on)}}</td></tr>
-                        <tr><td>Age: {{=age}}</td></tr>
-                        <tr><td>Gender: {{=user.gender}}</td></tr>
-                        <tr><td>Location: {{=user.user_location}}</td></tr>
-                        <tr><td>Genres: {{=user.genres}}</td></tr>
+                        <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
+                        <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
+                        <tr><td>Gender:</td><td>{{=user.gender or 'N/A'}}</td></tr>
+                        <tr><td>Location:</td><td>{{=user.user_location or 'N/A'}}</td></tr>
+                        <tr><td>Genres:</td><td>{{=user.genres or 'N/A'}}</td></tr>
                     </table>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="prof-right">
                     <div class="row">
                         <div class="span6 status">
-                            <h3 class=>{{=user.status}}</h3>
+                            <h3>{{=user.status}}</h3>
                         </div>
                     </div>
                     <div class="row user-stats">
@@ -50,17 +50,29 @@
                 </div>
             </div>
         </div>
+        {{if auth.user and auth.user.id != user.id:}}
+        <div class="prof-button-area">
+            {{if relationId:}}
+            <input type="hidden" name="rid" value="{{=relationId}}" />
+                {{=A('Remove Friend', _class='btn', _onclick="ajax('%s', ['rid']);location.reload();" % URL('default', 'removeFriend'))}}
+            {{else:}}
+                <input type="hidden" name="person" value="{{=user.id}}" />
+                <input type="hidden" name="status" value="friend" />
+                {{=A('Add Friend', _class='btn btn-primary', _onclick="ajax('%s', ['person', 'status']);location.reload();" % URL('default', 'addFriend'))}}
+            {{pass}}
+        </div>
+        {{pass}}
     </div>
 </div>
 
 <!-- User content area -->
 <div class="row">
-    <div class="span3">
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ac diam massa. Cras pretium ultrices enim, et sodales purus gravida eu. Sed vel magna venenatis, mattis nisl in, pharetra sapien. Nunc feugiat erat pulvinar diam fermentum bibendum et vel lorem. Proin porta, felis nec aliquet faucibus, neque tortor porttitor felis, sit amet pellentesque lectus sem et urna. Sed tincidunt ut augue ut semper. Proin imperdiet libero orci, vel feugiat turpis suscipit ac. Integer id ultricies lorem, nec dapibus eros. Sed in dolor eu ligula accumsan sodales in sit amet enim. Curabitur eget tellus et ipsum ornare vestibulum vel et justo. Proin varius lectus eleifend elit placerat tristique. Aenean in fringilla mi. Mauris condimentum diam in mauris pretium, ac volutpat arcu elementum. Pellentesque ornare vehicula mattis.
-        </p>
+    <div class="span4">
+        <div class="friend-container">
+            {{=personItemList(friendRelations)}}
+        </div>
     </div>
-    <div class="span9 post-container">
+    <div class="span8 post-container">
         {{=musicItemList(uploads)}}
     </div>
 </div>

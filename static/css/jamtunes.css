@@ -29,6 +29,38 @@
     bottom: 0;
 }
 
+.friend-container {
+    border: 1px solid gray;
+}
+
+.friend-container {
+    padding: 7px;
+}
+
+.friend-container img.media-object {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+.friend-container li.media {
+    min-height: 100px;
+    border: 1px solid lightgray;
+}
+
+.friend-container .person-info h5  {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.friend-container .person-info table {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.friend-container .person-info {
+    font-size: 12px;
+    line-height: 14px;
+}
 
 /* START Profile Page Style ========================================= */
 .prof-header {
@@ -57,6 +89,10 @@
     width: auto;
 }
 
+.prof-center table th {
+    text-align: center;
+}
+
 div.status {
     /*min-height: 150px;*/
 }
@@ -79,6 +115,13 @@ div.user-stats h3, div.user-stats h4 {
     border-left: 1px solid gray;
     border-right: 1px solid gray;
     margin-bottom: 30px;
+    position: relative;
+}
+
+.info-header .prof-button-area {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
 .info-content {
