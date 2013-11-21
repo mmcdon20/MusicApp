@@ -106,11 +106,15 @@ def commentItemList(comments):
 
     return XML(x)
 
-def personItemList(relations):
+def personItemList(relations, userId):
     x = '<ul class="media-list">'
 
     for relation in relations:
-        x += personItem(db.auth_user(relation.person))
+        # Create a LI with the correct person
+        if relation.created_by == userId:
+            x += personItem(db.auth_user(relation.person))
+        else:
+            x += personItem(db.auth_user(relation.created_by))
 
     x += '</ul>'
 
@@ -122,8 +126,7 @@ def personItem(person):
     profileRef  = URL('profile', args=person.id)
     location    = person.user_location or 'N/A'
     gender      = person.gender or 'N/A'
-    age         = prettydate(person.birthdate).replace(' years ago', '')
-    if not person.birthdate:age='N/A'
+    age         = prettydate(person.birthdate).replace(' years ago', '') or 'N/A'
     genres      = person.genres or 'N/A'
     if db.auth_user(person.id).picture:
         imageref = URL('download', args=db.auth_user(person.id).picture)
