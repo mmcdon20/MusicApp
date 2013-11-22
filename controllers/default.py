@@ -48,14 +48,17 @@ def search():
 
 # This func is getting ugly, prob want to break it down eventually
 def profile():
-    userId = 0
     if request.args:
         userId = request.args(0, cast=int)
         if db.auth_user(userId) is None:
-            session.flash = "User not found!"
+            session.flash = "User not found"
             redirect(URL('index'))
     else:
-        redirect(URL("profile", args=auth.user.id))
+        if auth.user:
+            redirect(URL("profile", args=auth.user.id))
+        else:
+            session.flash = "Must login to view your profile"
+            redirect(URL("index"))
 
     user = db.auth_user(userId)
     uploads = db(db.post.created_by == userId).select()
@@ -79,23 +82,13 @@ def profile():
         if editForm.process().accepted:
             redirect(URL('profile', args=auth.user.id))
 
-    # Somewhat complex logic, 
+    # IF this profile is not mine, find if we have a relation
     relationId = None
     if userId != auth.user.id:
         rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
+        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
         if len(rows) > 0:
             relationId = rows[0].id
-        rows = db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
-        if len(rows) > 0:
-            relationId = rows[0].id
-
-    #relationId = None
-    #if userId != auth.user.id:
-    #    relationId = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select().first().id
-
-    #db.profile_comment.post.default = user
-    #form = crud.create(db.profile_comment)
-    #comments = db(db.profile_comment.post==user).select(db.profile_comment.ALL)
 
     return locals()
 
