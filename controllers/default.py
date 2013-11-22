@@ -92,13 +92,13 @@ def profile():
             db.auth_user[auth.user.id] = dict(status=statusForm.vars.status)
             redirect(URL('profile', args=auth.user.id))
 
-    # IF this profile is not mine, find if we have a relation
-    relationId = None
-    if userId != auth.user.id:
-        rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
-        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
-        if len(rows) > 0:
-            relationId = rows[0].id
+        # IF this profile is not mine, find if we have a relation
+        relationId = None
+        if userId != auth.user.id:
+            rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
+            rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
+            if len(rows) > 0:
+                relationId = rows[0].id
 
     return locals()
 
