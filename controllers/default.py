@@ -19,9 +19,7 @@ def about():
     return locals()
 
 def register():
-
     form = auth.register()
-
     return locals()
 
 def search():
@@ -48,6 +46,8 @@ def search():
 
 # This func is getting ugly, prob want to break it down eventually
 def profile():
+    ############################################################
+    #### Handle request and set the profile userId
     if request.args:
         userId = request.args(0, cast=int)
         if db.auth_user(userId) is None:
@@ -59,6 +59,8 @@ def profile():
         else:
             session.flash = "Must login to view your profile"
             redirect(URL("index"))
+    #### END handle request
+    ############################################################
 
     user = db.auth_user(userId)
     uploads = db(db.post.created_by == userId).select()
@@ -80,6 +82,14 @@ def profile():
         )
         editForm.custom.submit['_class'] = 'btn-primary'
         if editForm.process().accepted:
+            redirect(URL('profile', args=auth.user.id))
+
+        statusForm = SQLFORM.factory(
+                       Field('status', 'string', requires=IS_NOT_EMPTY()),
+                       submit_button='Update Status')
+        statusForm.custom.submit['_class'] = 'btn-primary'
+        if statusForm.process().accepted:
+            db.auth_user[auth.user.id] = dict(status=statusForm.vars.status)
             redirect(URL('profile', args=auth.user.id))
 
     # IF this profile is not mine, find if we have a relation

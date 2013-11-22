@@ -17,34 +17,37 @@
             <div class="span3">
                 <div class="prof-center">
                     <table class="table">
-                        <tr>
-                            <th colspan="2">Information 
-                            {{if auth.user.id == userId:}}<a href="#editModal" role="button" data-toggle="modal">Edit</a>{{pass}}
-                            </th>
-                        </tr>
                         <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
                         <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
                         <tr><td>Gender:</td><td>{{=user.gender or 'N/A'}}</td></tr>
                         <tr><td>Location:</td><td>{{=user.user_location or 'N/A'}}</td></tr>
                         <tr><td>Genres:</td><td>{{=user.genres or 'N/A'}}</td></tr>
                     </table>
+                    {{if auth.user.id == userId:}}<a href="#editModal" role="button" data-toggle="modal">edit info</a>{{pass}}
                 </div>
             </div>
             <div class="span6">
                 <div class="prof-right">
                     <div class="row">
                         <div class="span6 status">
-                            <h3>{{=user.status}}</h3>
+                            <h3>{{=user.status or 'Some things are better left un-said'}}</h3>
+                            {{if auth.user.id == userId:}}<a href="#statusModal" role="button" data-toggle="modal">edit status</a>{{pass}}
                         </div>
                     </div>
                     <div class="row user-stats">
-                        <div class="span3">
-                            <h3>{{=totalLikes}}</h3>
-                            <h4>Total Likes</h4>
-                        </div>
-                        <div class="span3">
-                            <h3>{{=len(uploads)}}</h3>
-                            <h4>Total Uploads</h4>
+                        <div class="span6">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <h3>{{=totalLikes}}</h3>
+                                        <h4>Total Likes</h4>
+                                    </td>
+                                    <td>
+                                        <h3>{{=len(uploads)}}</h3>
+                                        <h4>Total Uploads</h4>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -75,7 +78,7 @@
 </div>
 
 <!-- Edit profile modal -->
-<!-- Modal -->
+<!-- Modals -->
 {{if auth.user:}}
     <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         {{=editForm.custom.begin}}
@@ -98,6 +101,22 @@
         </div>
         {{=editForm.custom.end}}
     </div>
+    <!--=============================Status Modal -->
+    <div id="statusModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {{=statusForm.custom.begin}}
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Edit your status</h3>
+        </div>
+        <div class="modal-body">
+            Status: <div>{{=statusForm.custom.widget.status}}</div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+            {{=statusForm.custom.submit}}
+        </div>
+        {{=statusForm.custom.end}}
+    </div>
 {{pass}}
 
 <script>
@@ -116,6 +135,16 @@
               type: "POST",
               url: "{{=URL('removeFriend')}}",
               data: { rid: rid }
+            })
+        .done(function( msg ) {
+            location.reload();
+        });
+    }
+    var editStatus = function(status) {
+        $.ajax({
+              type: "POST",
+              url: "{{=URL('editStatus')}}",
+            data: { user: {{=str(auth.user.id)}}, status: status }
             })
         .done(function( msg ) {
             location.reload();

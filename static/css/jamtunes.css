@@ -67,9 +67,17 @@
     min-height: 250px;
 }
 
-.prof-header table{
+.prof-center {
+    position: relative;
+}
+
+.prof-center table{
     height: 250px;
     margin-bottom: 0;
+}
+
+.prof-center tr:first-child td {
+    border-top: 0;
 }
 
 .prof-header h3 {
@@ -93,15 +101,32 @@
     text-align: center;
 }
 
-div.status {
-    /*min-height: 150px;*/
-}
-
 div.status h3 {
     text-align: center;
     margin-top: 0;
     font-style: italic;
     font-weight: normal;
+    min-height: 118px;
+    display: table-cell;
+    vertical-align: middle;
+    color: gray;
+}
+
+div.prof-right table {
+    min-height: 110px;
+    width: 100%;
+}
+
+div.status {
+    display: table;
+    min-height: 130px;
+    position: relative;
+}
+
+div.status a, div.prof-center a{
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 div.user-stats h3, div.user-stats h4 {
