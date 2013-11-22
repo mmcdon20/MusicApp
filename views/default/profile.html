@@ -119,7 +119,7 @@
     </div>
 {{pass}}
 
-{{if auth.user and auth.user.id == userId:}}
+{{if auth.user:}}
 <script>
     var addFriend = function(person, status) {
         $.ajax({
