@@ -40,6 +40,8 @@ def commentitem(comment):
     name = fullname(comment.created_by)
     date = prettydate(comment.created_on)
     userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
+    postlink = str(A("link",_href=URL('post',args=comment.item_id)))
+    
     if db.auth_user(comment.created_by).picture:
         imageref = URL('download', args=db.auth_user(comment.created_by).picture)
     else:
@@ -53,7 +55,7 @@ def commentitem(comment):
             <div class="media-body">
                 """ + text + """
                 <br />
-                """ + userlink + " / " + date + """
+                """ + userlink + " / " + date + " / " + postlink + """
             </div>
         </li>
     """)

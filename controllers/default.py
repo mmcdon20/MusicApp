@@ -113,9 +113,14 @@ def friends():
             friendIds.add(friend.created_by)
     
     friendUploads = db(db.post.created_by == 0).select()
+    friendComments = db(db.comment_item.created_by == 0).select()
     
     for friend in friendIds:
-        friendUploads = friendUploads & db(db.post.created_by == int(friend)).select(orderby=~db.post.created_on)
+        friendUploads = friendUploads & db(db.post.created_by == friend).select()
+        friendComments = friendComments & db(db.comment_item.created_by == friend).select()
+    
+    friendUploads = friendUploads.sort(lambda row: row.created_on, True)
+    friendComments = friendComments.sort(lambda row: row.created_on, True)
     
     return locals()
 

@@ -9,12 +9,16 @@
 <div class="row">
     <div class="span4">
         <div class="friend-container">
+            <h3>Friends</h3>
             {{=personItemList(friendRelations, auth.user.id)}}
         </div>
+        <div>
+            <h3>Friend Comments</h3>
+            {{=commentItemList(friendComments)}}
+        </div>        
     </div>
     <div class="span8 post-container">
+        <h3>Friend Uploads</h3>
         {{=musicItemList(friendUploads)}}
     </div>
 </div>
-
-{{=friendIds}}
