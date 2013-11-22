@@ -79,12 +79,19 @@ def profile():
         if editForm.process().accepted:
             redirect(URL('profile', args=auth.user.id))
 
-    # IF logged in and this profile is not me, find relation ID for use in view
-    relationId = 0
+    # Somewhat complex logic, 
+    relationId = None
     if userId != auth.user.id:
         rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
         if len(rows) > 0:
             relationId = rows[0].id
+        rows = db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
+        if len(rows) > 0:
+            relationId = rows[0].id
+
+    #relationId = None
+    #if userId != auth.user.id:
+    #    relationId = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select().first().id
 
     #db.profile_comment.post.default = user
     #form = crud.create(db.profile_comment)

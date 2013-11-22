@@ -53,12 +53,9 @@
         {{if auth.user and auth.user.id != user.id:}}
         <div class="prof-button-area">
             {{if relationId:}}
-            <input type="hidden" name="rid" value="{{=relationId}}" />
-                {{=A('Remove Friend', _class='btn', _onclick="ajax('%s', ['rid']);location.reload();" % URL('default', 'removeFriend'))}}
+                {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relationId) +');')}}
             {{else:}}
-                <input type="hidden" name="person" value="{{=user.id}}" />
-                <input type="hidden" name="status" value="friend" />
-                {{=A('Add Friend', _class='btn btn-primary', _onclick="ajax('%s', ['person', 'status']);location.reload();" % URL('default', 'addFriend'))}}
+                {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
             {{pass}}
         </div>
         {{pass}}
@@ -102,3 +99,26 @@
         {{=editForm.custom.end}}
     </div>
 {{pass}}
+
+<script>
+    var addFriend = function(person, status) {
+        $.ajax({
+              type: "POST",
+              url: "{{=URL('addFriend')}}",
+              data: { person: person, status: status }
+            })
+        .done(function( msg ) {
+            location.reload();
+        });
+    }
+    var removeFriend = function(rid) {
+        $.ajax({
+              type: "POST",
+              url: "{{=URL('removeFriend')}}",
+              data: { rid: rid }
+            })
+        .done(function( msg ) {
+            location.reload();
+        });
+    }
+</script>
