@@ -21,7 +21,10 @@ def navbar(auth_navbar):
                    **{"_data-toggle": "dropdown"})
         li_register = LI(A(I(_class="icon-user"), ' ',
                           current.T("Register"),
-                          _href=URL("register"), _rel="nofollow"))
+                         _href="#registerModal", 
+                         _role="Button",
+                         _rel="nofollow",
+                         **{'_data-toggle':'modal'}))
         li_password = LI(A(I(_class="icon-book"), ' ',
                          current.T("Forgot password?"),
                          _href="#resetModal", 
@@ -61,14 +64,12 @@ def navbar(auth_navbar):
                           _role="Button",
                           _rel="nofollow",
                           **{'_data-toggle':'modal'}))
-
         li_password = LI(A(I(_class="icon-book"), ' ',
                          current.T("Change password"),
                          _href="#passwordModal", 
                          _role="Button",
                          _rel="nofollow",
                          **{'_data-toggle':'modal'}))
-        
         li_logout = LI(A(I(_class="icon-off"), ' ',
                          current.T("logout"),
                          _href=bar["logout"], _rel="nofollow"))

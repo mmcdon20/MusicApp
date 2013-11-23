@@ -35,7 +35,9 @@ def _setupTuneMenu():
 _setupTuneMenu()
 
 uploadForm   = SQLFORM(db.post)
-loginForm    = auth.login()
+
+if not auth.user:
+    registerForm = auth.register()
 
 if uploadForm.process().accepted:
     redirect(URL("post", args=uploadForm.vars.id))
