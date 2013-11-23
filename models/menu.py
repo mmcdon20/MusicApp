@@ -34,10 +34,15 @@ def _setupTuneMenu():
 
 _setupTuneMenu()
 
-uploadForm   = SQLFORM(db.post)
-loginForm    = auth.login()
+## Define global forms for auth functionlality
+if auth.user:
+    uploadForm   = SQLFORM(db.post)
+    if uploadForm.process().accepted:
+        redirect(URL("post", args=uploadForm.vars.id))
+else:
+    loginForm    = auth.login()
+    if loginForm.process().accepted:
+        redirect(URL("profile", args=auth.user.id))
 
-if uploadForm.process().accepted:
-    redirect(URL("post", args=uploadForm.vars.id))
 
 if "auth" in locals(): auth.wikimenu()
