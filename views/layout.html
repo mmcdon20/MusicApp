@@ -153,10 +153,26 @@ sheets -->
       </div>
       <div class="modal-footer">
         {{=uploadForm.custom.submit}}
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     {{=uploadForm.custom.end}}
-  </div>
+  </div>  
+  <div id="passwordModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{passwordForm = auth.change_password()}}
+    {{=passwordForm.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Login</h3>
+      </div>
+      <div class="modal-body">
+        Old Password: <div>{{=passwordForm.custom.widget.old_password}}</div>
+        New Password: <div>{{=passwordForm.custom.widget.new_password}}</div>
+        Verify Password: <div>{{=passwordForm.custom.widget.new_password2}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=passwordForm.custom.submit}}
+      </div>
+    {{=passwordForm.custom.end}}
+  </div>  
 {{else:}}
   <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {{=loginForm.custom.begin}}
@@ -170,7 +186,6 @@ sheets -->
       </div>
       <div class="modal-footer">
         {{=loginForm.custom.submit}}
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
       </div>
     {{=loginForm.custom.end}}
   </div>

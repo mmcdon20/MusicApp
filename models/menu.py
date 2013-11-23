@@ -36,12 +36,8 @@ _setupTuneMenu()
 
 uploadForm   = SQLFORM(db.post)
 loginForm    = auth.login()
-#passwordForm = auth.change_password()
 
 if uploadForm.process().accepted:
     redirect(URL("post", args=uploadForm.vars.id))
 
-#if passwordForm.process().accepted:
-#    redirect(URL('profile'))
-    
 if "auth" in locals(): auth.wikimenu()
