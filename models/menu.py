@@ -37,12 +37,15 @@ _setupTuneMenu()
 searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
 searchForm.custom.widget.query['_placeholder']= 'Search'
 
+uploadForm   = SQLFORM(db.post)
+
 if searchForm.process().accepted:
-        redirect(URL("search", args=searchForm.vars.query))
+    redirect(URL("search", args=searchForm.vars.query))
+
+if uploadForm.process().accepted:
+    redirect(URL("post", args=uploadForm.vars.id))
 
 if not auth.user:
     registerForm = auth.register()
-else:
-    uploadForm   = SQLFORM(db.post)
 
 if "auth" in locals(): auth.wikimenu()
