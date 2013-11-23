@@ -35,6 +35,7 @@ def _setupTuneMenu():
 _setupTuneMenu()
 
 searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
+searchForm.custom.widget.query['_placeholder']= 'Search'
 
 if searchForm.process().accepted:
         redirect(URL("search", args=searchForm.vars.query))
