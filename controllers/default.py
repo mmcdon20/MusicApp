@@ -33,14 +33,7 @@ def search():
     else:
         results = None
 
-    form = SQLFORM.factory(
-                   Field('query','string', default = query),
-                   submit_button='Search')
-
-    form.custom.submit['_class'] = 'btn-primary'
-
-    if form.process().accepted:
-        redirect(URL("search", args=form.vars.query))
+    searchForm.custom.widget.query['_value']= query
 
     return locals()
 

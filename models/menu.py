@@ -34,9 +34,14 @@ def _setupTuneMenu():
 
 _setupTuneMenu()
 
-uploadForm   = SQLFORM(db.post)
+searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
+
+if searchForm.process().accepted:
+        redirect(URL("search", args=searchForm.vars.query))
 
 if not auth.user:
     registerForm = auth.register()
+else:
+    uploadForm   = SQLFORM(db.post)
 
 if "auth" in locals(): auth.wikimenu()

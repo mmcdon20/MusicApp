@@ -86,6 +86,18 @@ sheets -->
           {{=MENU(response.menu, _class='mobile-menu nav' if is_mobile else 'nav',mobile=is_mobile,li_class='dropdown',ul_class='dropdown-menu')}}
           {{pass}}
         </div><!--/.nav-collapse -->
+          
+          
+        {{=searchForm.custom.begin}}
+          {{=searchForm.custom.widget.query}}
+        {{=searchForm.custom.end}} 
+          
+        <!--
+        <form  action="{{URL("search", args='yolo')}}" enctype="multipart/form-data" method="post" class="navbar-search pull-left">
+          <input class="string" id="no_table_query" name="query" type="text" class="search-query" placeholder="Search" value="" />
+        </form>    
+        -->
+          
         <ul id="navbar" class="nav pull-right">{{='auth' in globals() and custom.navbar(auth.navbar(mode='bare')) or ''}}</ul>
       </div>
     </div>
