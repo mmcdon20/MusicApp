@@ -15,7 +15,7 @@ def index():
     return locals()
 
 def about():
-    db.relationship.delete(7)
+    
     return locals()
 
 def register():

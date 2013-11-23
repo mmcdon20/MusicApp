@@ -32,22 +32,16 @@ def _setupTuneMenu():
 
     response.menu += [(SPAN('Tunes', _class='highlighted'), False, URL('index'), genreList)]
 
-def _setupMainMenu():
-    response.menu += [
-        (T('Search'), False, URL('search'), []),
-        (T('About'), False, URL('about'), [])
-    ]
-
-def _setupAuthMenu():
-    response.menu += [
-        (LI(_class="divider-vertical"), False, '', []),
-        (T('Profile'), False, URL('profile'), []),
-        (T('Friends'), False, URL('friends'), []),
-        (T('Upload'), False, URL('upload'), [])
-    ]
-
 _setupTuneMenu()
-_setupMainMenu()
-if auth.user:
-    _setupAuthMenu()
+
+uploadForm   = SQLFORM(db.post)
+loginForm    = auth.login()
+#passwordForm = auth.change_password()
+
+if uploadForm.process().accepted:
+    redirect(URL("post", args=uploadForm.vars.id))
+
+#if passwordForm.process().accepted:
+#    redirect(URL('profile'))
+    
 if "auth" in locals(): auth.wikimenu()

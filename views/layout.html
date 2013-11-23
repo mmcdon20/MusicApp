@@ -137,6 +137,45 @@ sheets -->
 
   </div> <!-- /container -->
 
+    
+{{if auth.user:}}
+  <div id="uploadModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{=uploadForm.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Upload a file</h3>
+      </div>
+      <div class="modal-body">
+        Title: <div>{{=uploadForm.custom.widget.title}}</div>
+        Attachment: <div>{{=uploadForm.custom.widget.attachment}}</div>
+        Description: <div>{{=uploadForm.custom.widget.description}}</div>
+        Genre: <div>{{=uploadForm.custom.widget.genre}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=uploadForm.custom.submit}}
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    {{=uploadForm.custom.end}}
+  </div>
+{{else:}}
+  <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{=loginForm.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Login</h3>
+      </div>
+      <div class="modal-body">
+        E-mail: <div>{{=loginForm.custom.widget.email}}</div>
+        Password: <div>{{=loginForm.custom.widget.password}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=loginForm.custom.submit}}
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      </div>
+    {{=loginForm.custom.end}}
+  </div>
+{{pass}}
+    
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->
   <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
