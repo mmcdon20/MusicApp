@@ -175,6 +175,7 @@ sheets -->
   </div>  
 {{else:}}
   <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{loginForm = auth.login()}}
     {{=loginForm.custom.begin}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -189,6 +190,21 @@ sheets -->
       </div>
     {{=loginForm.custom.end}}
   </div>
+  <div id="resetModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{resetForm = auth.request_reset_password()}}
+    {{=resetForm.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Change password</h3>
+      </div>
+      <div class="modal-body">
+        E-mail: <div>{{=resetForm.custom.widget.email}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=resetForm.custom.submit}}
+      </div>
+    {{=resetForm.custom.end}}
+  </div> 
 {{pass}}
     
   <!-- The javascript =============================================

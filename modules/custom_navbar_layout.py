@@ -23,8 +23,11 @@ def navbar(auth_navbar):
                           current.T("Register"),
                           _href=URL("register"), _rel="nofollow"))
         li_password = LI(A(I(_class="icon-book"), ' ',
-                         current.T("Lost Password?"),
-                         _href=URL('user/request_reset_password'), rel="nofollow")) #  ADD NEXT PARAMETER TO URL!!!
+                         current.T("Forgot password?"),
+                         _href="#resetModal", 
+                         _role="Button",
+                         _rel="nofollow",
+                         **{'_data-toggle':'modal'}))
         li_login = LI(A(I(_class="icon-off"), ' ',
                          current.T("Login"),
                          _href="#loginModal", 
