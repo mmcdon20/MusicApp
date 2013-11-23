@@ -140,6 +140,7 @@ sheets -->
     
 {{if auth.user:}}
   <div id="uploadModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{uploadForm.custom.submit['_class'] = 'btn-primary'}}
     {{=uploadForm.custom.begin}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -158,6 +159,7 @@ sheets -->
   </div>  
   <div id="passwordModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {{passwordForm = auth.change_password()}}
+    {{passwordForm.custom.submit['_class'] = 'btn-primary'}}
     {{=passwordForm.custom.begin}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -176,6 +178,7 @@ sheets -->
 {{else:}}
   <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {{loginForm = auth.login()}}
+    {{loginForm.custom.submit['_class'] = 'btn-primary'}}
     {{=loginForm.custom.begin}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -192,6 +195,7 @@ sheets -->
   </div>
   <div id="resetModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     {{resetForm = auth.request_reset_password()}}
+    {{resetForm.custom.submit['_class'] = 'btn-primary'}}
     {{=resetForm.custom.begin}}
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
