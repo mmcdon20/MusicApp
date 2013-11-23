@@ -8,9 +8,6 @@ def navbar(auth_navbar):
     li_about = LI(A(I(_class="icon-info-sign"), ' ',
                           current.T("About"),
                           _href=URL("about"), _rel="nofollow"))
-    li_search = LI(A(I(_class="icon-search"), ' ',
-                          current.T("Search"),
-                          _href=URL("search"), _rel="nofollow"))
     
     if not user:
         toggletext = "Login/Register"
@@ -41,7 +38,6 @@ def navbar(auth_navbar):
                       li_password,
                       LI('', _class="divider"),
                       li_about,
-                      li_search,
                       LI('', _class="divider"),
                       li_login,
                       _class="dropdown-menu", _role="menu")
@@ -78,7 +74,6 @@ def navbar(auth_navbar):
                       li_password,
                       LI('', _class="divider"),
                       li_about,
-                      li_search,
                       li_upload,
                       LI('', _class="divider"),
                       li_logout,
