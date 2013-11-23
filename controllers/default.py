@@ -95,6 +95,36 @@ def profile():
 
     return locals()
 
+#This methods is used to change the status of a post, i.e either like the post or dislike the post
+@auth.requires_login()
+def change_status():
+    id = request.args(0, cast=int)
+    id = int(id)
+    post = db.post(id) or redirect(URL('index'))
+    new_status = request.vars.status
+    
+    #figure out the status and make a record of if its a like or dislike
+    if new_status in STATUS:
+        record = db((db.post_like.post == id) & (db.post_like.created_by == auth.user.id)).select()
+
+        if not record:
+            if new_status == 'Like':
+                db.post_like.insert(post=id, status='like')
+            else:
+                db.post_like.insert(post=id, status='dislike')
+        else:
+            if(record[0].status == new_status):
+                session.flash = 'You canno\'t like or dislike something more then once!'
+                redirect(URL('index'))
+            else:
+                if new_status == 'Like':
+                   db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).update(status='like')
+                else:
+                   db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).update(status='dislike')
+        #Now redirect them to the index again
+        redirect(URL('index'))
+    return locals()
+
 @auth.requires_login()
 def friends():
     userId = auth.user.id

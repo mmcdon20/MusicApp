@@ -1,7 +1,11 @@
 # coding: utf8
+###########################################################################
+#                        Table Definitions                                #
+###########################################################################
 GENRES=['Classic Rock', 'Rap', 'Pop', 'Classical', 'Blues', 'Jazz', 'Metal', 'Punk', 'Electronic']
 RELATION=['friend', 'request', 'block']
 GENDERS=['Male', 'Female']
+STATUS=['Like', 'Dislike']
 
 db.define_table('post',
                 Field('title', 'string', requires=IS_NOT_EMPTY()),
@@ -29,6 +33,11 @@ db.define_table('post_like',
                 Field('post', db.post, readable=False, writable=False),
                  auth.signature
 )
+
+
+###############################################################################
+#                   Helper Functions                                          #
+###############################################################################
 
 def fullname(user_id):
     if user_id is None:
@@ -72,6 +81,10 @@ def musicitem(post):
     description = post.description
     attachref   = URL('download',args=post.attachment)
 
+    #Count the number of likes and the number of dislikes
+    likes = str(len(db(db.post_like.status == 'like').select()))
+    dislikes = str(len(db(db.post_like.status == 'dislike').select()))
+    
     return XML("""
             <li class="media">
                 <a class="pull-left" href=\"""" + postref + """">
@@ -86,7 +99,17 @@ def musicitem(post):
                     </audio>
                 </div>
             </li>
+            <h6>Likes/dislikes</h6>
+            <h6>"""+likes+"/"+dislikes+"""</h6>
     """)
+
+def music_item_status_buttons(post):
+    like_href = URL('change_status', args=post.id, vars=dict(status='Like'))
+    dislike_href = URL('change_status', args=post.id, vars=dict(status='Dislike'))
+    return """
+             <a class="btn" href="""+like_href+""">Like</a>
+             <a class="btn" href="""+dislike_href+""">Dislike</a>
+    """
 
 def musicItemList(posts):
     x = '<ul class="media-list">'
