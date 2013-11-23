@@ -39,7 +39,4 @@ uploadForm   = SQLFORM(db.post)
 if not auth.user:
     registerForm = auth.register()
 
-if uploadForm.process().accepted:
-    redirect(URL("post", args=uploadForm.vars.id))
-
 if "auth" in locals(): auth.wikimenu()
