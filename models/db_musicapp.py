@@ -102,6 +102,7 @@ def musicitem(post):
             </li>
             <h6>Likes/dislikes</h6>
             <h6>"""+likes+"/"+dislikes+"""</h6>
+            """+music_item_status_buttons(post)+"""
     """)
 
 def music_item_status_buttons(post):
@@ -117,7 +118,7 @@ def musicItemList(posts):
 
     for post in posts:
         x += musicitem(post)
-        x += music_item_status_buttons(post)
+        #x += music_item_status_buttons(post)
         
     x += '</ul>'
 
