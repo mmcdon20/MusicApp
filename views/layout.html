@@ -229,20 +229,11 @@ sheets -->
         <h3 id="myModalLabel">Register</h3>
       </div>
       <div class="modal-body">
-        <h4>Required Information</h4>
-        <p>This information is required for an account</p>
         First Name: <div>{{=registerForm.custom.widget.first_name}}</div>
         Last Name: <div>{{=registerForm.custom.widget.last_name}}</div>
         Email: <div>{{=registerForm.custom.widget.email}}</div>
         Password: <div>{{=registerForm.custom.widget.password}}</div>
         Verify Password: <div>{{=registerForm.custom.widget.password_two}}</div>
-        
-        <h4>Profile Information</h4>
-        <p>This information is included on you user profile.</p>
-        Birthdate: <div>{{=registerForm.custom.widget.birthdate}}</div>
-        Location: <div>{{=registerForm.custom.widget.user_location}}</div>
-        Genres: <div>{{=registerForm.custom.widget.genres}}</div>
-        Picture: <div>{{=registerForm.custom.widget.picture}}</div>
       </div>
       <div class="modal-footer">
         {{=registerForm.custom.submit}}
