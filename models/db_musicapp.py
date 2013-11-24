@@ -83,8 +83,8 @@ def musicitem(post):
     attachref   = URL('download',args=post.attachment)
 
     #Count the number of likes and the number of dislikes
-    likes = str(len(db(db.post_like.status == 'like').select()))
-    dislikes = str(len(db(db.post_like.status == 'dislike').select()))
+    likes = str(len(db((db.post_like.status == 'like') & (db.post_like.post==post.id)).select()))
+    dislikes = str(len(db((db.post_like.status == 'dislike') & (db.post_like.post==post.id)).select()))
     
     return XML("""
             <li class="media">
