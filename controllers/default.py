@@ -54,38 +54,47 @@ def profile():
             redirect(URL("index"))
     #### END handle request
     ############################################################
-
+    
+    # If user has no profile, create one.
+    if db(db.profile_info.person==userId).select().first() is None:
+        db.profile_info.insert(person=userId)
+    if db(db.user_status.person==userId).select().first() is None:
+        db.user_status.insert(person=userId, body="Some things are better left unsaid")
+    
     user = db.auth_user(userId)
+    info = db(db.profile_info.person==userId).select().first()
     uploads = db(db.post.created_by == userId).select()
+    status =  db(db.user_status.person==userId).select().first().body
     friendRelations = db(db.relationship.created_by == userId).select()
     friendRelations = friendRelations & db(db.relationship.person == userId).select()
 
     # Calculated Profile Fields
-    age = prettydate(user.birthdate).replace(' years ago', '') # TODO: better!
+    age = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
 
     #fake fields
     totalLikes = 1337
 
-    # Create edit profile form TODO: move to a function
-    if auth.user:
-        editForm = SQLFORM(db.auth_user,
-            record = db.auth_user(auth.user.id) or redirect(URL('index')),
-            fields = ['first_name', 'last_name', 'birthdate', 'gender', 'user_location', 'genres', 'picture'],
+    # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
+    if auth.user and auth.user.id == userId:
+        # TODO, make double table form for user name edit right here!
+        editForm = SQLFORM(db.profile_info,
+            record = db(db.profile_info.person==userId).select().first(),
+            fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
             submit_button = 'Save Changes'
         )
         editForm.custom.submit['_class'] = 'btn-primary'
         if editForm.process().accepted:
             redirect(URL('profile', args=auth.user.id))
 
-        statusForm = SQLFORM.factory(
-                       Field('status', 'string', requires=IS_NOT_EMPTY()),
-                       submit_button='Update Status')
+        statusForm = SQLFORM(db.user_status,
+                            record = db(db.user_status.person==userId).select().first(),
+                            fields = ['body'],
+                            submit_button='Update Status')
         statusForm.custom.submit['_class'] = 'btn-primary'
         if statusForm.process().accepted:
-            db.auth_user[auth.user.id] = dict(status=statusForm.vars.status)
             redirect(URL('profile', args=auth.user.id))
-
-        # IF this profile is not mine, find if we have a relation
+    # IF this profile is not mine, find if we have a relation
+    else:
         relationId = None
         if userId != auth.user.id:
             rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()

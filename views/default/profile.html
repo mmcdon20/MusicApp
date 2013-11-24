@@ -19,9 +19,9 @@
                     <table class="table">
                         <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
                         <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
-                        <tr><td>Gender:</td><td>{{=user.gender or 'N/A'}}</td></tr>
-                        <tr><td>Location:</td><td>{{=user.user_location or 'N/A'}}</td></tr>
-                        <tr><td>Genres:</td><td>{{=user.genres or 'N/A'}}</td></tr>
+                        <tr><td>Gender:</td><td>{{=info.gender or 'N/A'}}</td></tr>
+                        <tr><td>Location:</td><td>{{=info.user_location or 'N/A'}}</td></tr>
+                        <tr><td>Genres:</td><td>{{=info.genres or 'N/A'}}</td></tr>
                     </table>
                     {{if auth.user and auth.user.id == userId:}}<a href="#editModal" role="button" data-toggle="modal">edit info</a>{{pass}}
                 </div>
@@ -30,7 +30,7 @@
                 <div class="prof-right">
                     <div class="row">
                         <div class="span6 status">
-                            <h3>{{=user.status or 'Some things are better left un-said'}}</h3>
+                            <h3>{{=status}}</h3>
                             {{if auth.user and auth.user.id == userId:}}<a href="#statusModal" role="button" data-toggle="modal">edit status</a>{{pass}}
                         </div>
                     </div>
@@ -79,7 +79,7 @@
 
 <!-- Edit profile modal -->
 <!-- Modals -->
-{{if auth.user:}}
+{{if auth.user and auth.user.id == userId :}}
     <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         {{=editForm.custom.begin}}
         <div class="modal-header">
@@ -87,8 +87,8 @@
             <h3 id="myModalLabel">Edit your profile</h3>
         </div>
         <div class="modal-body">
-            First Name: <div>{{=editForm.custom.widget.first_name}}</div>
-            Last Name: <div>{{=editForm.custom.widget.last_name}}</div>
+            <!--First Name: <div>{{=editForm.custom.widget.first_name}}</div>-->
+            <!--Last Name: <div>{{=editForm.custom.widget.last_name}}</div>-->
             Birthdate: <div>{{=editForm.custom.widget.birthdate}}</div>
             Gender: <div>{{=editForm.custom.widget.gender}}</div>
             Location: <div>{{=editForm.custom.widget.user_location}}</div>
@@ -108,7 +108,7 @@
             <h3 id="myModalLabel">Edit your status</h3>
         </div>
         <div class="modal-body">
-            Status: <div>{{=statusForm.custom.widget.status}}</div>
+            Status: <div>{{=statusForm.custom.widget.body}}</div>
         </div>
         <div class="modal-footer">
             {{=statusForm.custom.submit}}
