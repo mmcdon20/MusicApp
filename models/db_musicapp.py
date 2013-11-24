@@ -51,7 +51,7 @@ def commentitem(comment):
     date = prettydate(comment.created_on)
     userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
     postlink = str(A("link",_href=URL('post',args=comment.item_id)))
-    
+
     if db.auth_user(comment.created_by).picture:
         imageref = URL('download', args=db.auth_user(comment.created_by).picture)
     else:
@@ -83,14 +83,14 @@ def musicitem(post):
     attachref   = URL('download',args=post.attachment)
 
     #Count the number of likes and the number of dislikes
-    likes = str(len(db((db.post_like.status == 'like') & (db.post_like.post==post.id)).select()))
-    dislikes = str(len(db((db.post_like.status == 'dislike') & (db.post_like.post==post.id)).select()))
-    
+    likes = str(db((db.post_like.status == 'Like') & (db.post_like.post==post.id)).count())
+    dislikes = str(db((db.post_like.status == 'Dislike') & (db.post_like.post==post.id)).count())
+
     if auth.user:
         buttons = music_item_status_buttons(post)
     else:
         buttons = ""
-    
+
     return XML("""
             <li class="media">
                 <a class="pull-left" href=\"""" + postref + """">
@@ -111,23 +111,19 @@ def musicitem(post):
     """)
 
 def music_item_status_buttons(post):
+    record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
     like_href = URL('change_status', args=post.id, vars=dict(status='Like'))
     dislike_href = URL('change_status', args=post.id, vars=dict(status='Dislike'))
 
-    record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
-    buttons = """"""
-    
-    #Style the button that is currently active so that it pops out, also the button that has been cliked will say undo so if its clicked again it will undo the like or dislike
     if not record:
-        buttons = """ <a class="btn"  href="""+like_href+""">Like</a>
-                      <a class="btn"  href="""+dislike_href+""">Dislike</a>"""
+        buttons = """ <a class="btn"  href="""+like_href+""">Jam It</a>
+                      <a class="btn"  href="""+dislike_href+""">Can It</a>"""
+    elif record[0].status == 'Like':
+        buttons = """<a class="btn btn-primary"  href="""+like_href+""">Jam It</a>
+                     <a class="btn" href="""+dislike_href+""">Can It</a> """
     else:
-        if record[0].status == 'like':
-            buttons = """<a class="btn btn-primary"  href="""+like_href+""">Undo</a>
-                         <a class="btn" href="""+dislike_href+""">Dislike</a> """
-        else:
-            buttons = """ <a class="btn"  href="""+like_href+""">Like</a>
-                          <a class="btn btn-primary" href="""+dislike_href+""">Undo</a> """
+        buttons = """ <a class="btn"  href="""+like_href+""">Jam It</a>
+                      <a class="btn btn-primary" href="""+dislike_href+""">Can It</a> """
 
     return buttons
 
@@ -137,7 +133,7 @@ def musicItemList(posts):
     for post in posts:
         x += musicitem(post)
         #x += music_item_status_buttons(post)
-        
+
     x += '</ul>'
 
     return XML(x)
