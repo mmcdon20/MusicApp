@@ -77,7 +77,7 @@ def profile():
     cans = db(db.post_like).select(join=db.post.on((db.post_like.post==db.post.id)&
                                                    (db.post.created_by==userId)&
                                                    (db.post_like.status=='Dislike')))
-    totalLikes = len(jams) - len(cans)
+    score = len(jams) - len(cans)
 
     # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
     if auth.user and auth.user.id == userId:
