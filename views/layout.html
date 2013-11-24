@@ -251,6 +251,21 @@ sheets -->
   </div> 
 {{pass}}
     
+    
+<script>
+    var changeStatus = function(commentid, status) {
+        $.ajax({
+              type: "POST",
+              url: "{{=URL('changeStatus')}}",
+              data: { commentid: commentid, status: status }
+            })
+        .done(function( msg ) {
+            location.reload();
+        });
+    }
+</script>
+    
+    
   <!-- The javascript =============================================
        (Placed at the end of the document so the pages load faster) -->
   <script src="{{=URL('static','js/bootstrap.min.js')}}"></script>
