@@ -31,6 +31,7 @@ db.define_table('relationship',
 
 db.define_table('post_like',
                 Field('post', db.post, readable=False, writable=False),
+                Field('status', 'string', requires=IS_IN_SET(STATUS)),
                  auth.signature
 )
 
@@ -116,7 +117,8 @@ def musicItemList(posts):
 
     for post in posts:
         x += musicitem(post)
-
+        x += music_item_status_buttons(post)
+        
     x += '</ul>'
 
     return XML(x)
