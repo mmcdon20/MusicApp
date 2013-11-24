@@ -127,20 +127,21 @@ def musicitem(post):
 
 def music_item_status_buttons(post):
     record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
-    like_href = URL('change_status', args=post.id, vars=dict(status='Like'))
-    dislike_href = URL('change_status', args=post.id, vars=dict(status='Dislike'))
-
+    
     if not record:
-        buttons = """ <a class="btn"  href="""+like_href+""">Jam It</a>
-                      <a class="btn"  href="""+dislike_href+""">Can It</a>"""
+        likestyle    = 'btn'
+        dislikestyle = 'btn'
     elif record[0].status == 'Like':
-        buttons = """<a class="btn btn-primary"  href="""+like_href+""">Jam It</a>
-                     <a class="btn" href="""+dislike_href+""">Can It</a> """
+        likestyle    = 'btn btn-primary'
+        dislikestyle = 'btn'
     else:
-        buttons = """ <a class="btn"  href="""+like_href+""">Jam It</a>
-                      <a class="btn btn-primary" href="""+dislike_href+""">Can It</a> """
+        likestyle    = 'btn'
+        dislikestyle = 'btn btn-primary'
+    
+    like_btn = str(A('Jam It', _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
+    dislike_btn = str(A('Can It', _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
 
-    return buttons
+    return like_btn + dislike_btn
 
 def musicItemList(posts):
     x = '<ul class="media-list">'
