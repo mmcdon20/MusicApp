@@ -93,14 +93,14 @@ def profile():
         statusForm.custom.submit['_class'] = 'btn-primary'
         if statusForm.process().accepted:
             redirect(URL('profile', args=auth.user.id))
+            
     # IF this profile is not mine, find if we have a relation
-    else:
-        relationId = None
-        if userId != auth.user.id:
-            rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
-            rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
-            if len(rows) > 0:
-                relationId = rows[0].id
+    relationId = None
+    if auth.user and userId != auth.user.id:
+        rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
+        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
+        if len(rows) > 0:
+            relationId = rows[0].id
 
     return locals()
 
