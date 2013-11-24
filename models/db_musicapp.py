@@ -138,8 +138,11 @@ def music_item_status_buttons(post):
         likestyle    = 'btn'
         dislikestyle = 'btn btn-primary'
     
-    like_btn = str(A('Jam It', _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
-    dislike_btn = str(A('Can It', _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
+    like_icon = I(_class='icon-thumbs-up')
+    dislike_icon = I(_class='icon-thumbs-down')
+    
+    like_btn = str(A(like_icon+'Jam It', _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
+    dislike_btn = str(A(dislike_icon+'Can It', _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
 
     return like_btn + dislike_btn
 
