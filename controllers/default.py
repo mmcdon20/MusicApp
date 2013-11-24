@@ -114,8 +114,8 @@ def change_status():
                 db.post_like.insert(post=id, status='dislike')
         else:
             if(record[0].status == new_status):
-                session.flash = 'You canno\'t like or dislike something more then once!'
-                redirect(URL('index'))
+                record.delete()
+                #db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).delete()
             else:
                 if new_status == 'Like':
                    db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).update(status='like')

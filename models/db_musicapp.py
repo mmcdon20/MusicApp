@@ -108,10 +108,23 @@ def musicitem(post):
 def music_item_status_buttons(post):
     like_href = URL('change_status', args=post.id, vars=dict(status='Like'))
     dislike_href = URL('change_status', args=post.id, vars=dict(status='Dislike'))
-    return """
-             <a class="btn" href="""+like_href+""">Like</a>
-             <a class="btn" href="""+dislike_href+""">Dislike</a>
-    """
+
+    record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
+    buttons = """"""
+    
+    #Style the button that is currently active so that it pops out, also the button that has been cliked will say undo so if its clicked again it will undo the like or dislike
+    if not record:
+        buttons = """ <a class="btn"  href="""+like_href+""">Like</a>
+                      <a class="btn"  href="""+dislike_href+""">Dislike</a>"""
+    else:
+        if record[0].status == 'like':
+            buttons = """<a class="btn btn-primary"  href="""+like_href+""">Undo</a>
+                         <a class="btn" href="""+dislike_href+""">Dislike</a> """
+        else:
+            buttons = """ <a class="btn"  href="""+like_href+""">Like</a>
+                          <a class="btn btn-primary" href="""+dislike_href+""">Undo</a> """
+
+    return buttons
 
 def musicItemList(posts):
     x = '<ul class="media-list">'
