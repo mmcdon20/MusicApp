@@ -86,6 +86,11 @@ def musicitem(post):
     likes = str(len(db((db.post_like.status == 'like') & (db.post_like.post==post.id)).select()))
     dislikes = str(len(db((db.post_like.status == 'dislike') & (db.post_like.post==post.id)).select()))
     
+    if auth.user:
+        buttons = music_item_status_buttons(post)
+    else:
+        buttons = ""
+    
     return XML("""
             <li class="media">
                 <a class="pull-left" href=\"""" + postref + """">
@@ -102,7 +107,7 @@ def musicitem(post):
             </li>
             <h6>Likes/dislikes</h6>
             <h6>"""+likes+"/"+dislikes+"""</h6>
-            """+music_item_status_buttons(post)+"""
+            """+buttons+"""
     """)
 
 def music_item_status_buttons(post):
