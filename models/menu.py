@@ -34,6 +34,9 @@ def _setupTuneMenu():
 
 _setupTuneMenu()
 
+auth.settings.login_next = URL('profile')
+auth.settings.register_next = URL('profile')
+
 searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
 searchForm.custom.widget.query['_placeholder']= 'Search for jams and jammers'
 
