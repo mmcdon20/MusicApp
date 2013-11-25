@@ -49,7 +49,11 @@ db.define_table('user_status',
                 Field('created_on', 'datetime', default=request.now),
                 Field('body', 'string', requires=IS_NOT_EMPTY())
 )
-
+###############################################################################
+#                   Populate DEVELOPMENT ONLY!                                #
+###############################################################################
+#from gluon.contrib.populate import populate
+#populate(db.auth_user,100)
 
 ###############################################################################
 #                   Helper Functions                                          #
@@ -182,15 +186,15 @@ def personItemList(relations, userId):
     return XML(x)
 
 def personItem(person):
-
+    info = db(db.profile_info.person==person.id).select().first()
     name        = fullname(person.id)
     profileRef  = URL('profile', args=person.id)
-    location    = person.user_location or 'N/A'
-    gender      = person.gender or 'N/A'
-    age         = prettydate(person.birthdate).replace(' years ago', '') or 'N/A'
-    genres      = person.genres or 'N/A'
-    if db.auth_user(person.id).picture:
-        imageref = URL('download', args=db.auth_user(person.id).picture)
+    location    = info.user_location or 'N/A'
+    gender      = info.gender or 'N/A'
+    age         = prettydate(info.birthdate).replace(' years ago', '') or 'N/A'
+    genres      = info.genres or 'N/A'
+    if info.picture:
+        imageref = URL('download', args=info.picture)
     else:
         imageref = URL('static', 'images/user_placeholder.jpg')
 
