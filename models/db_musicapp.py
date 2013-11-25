@@ -9,7 +9,7 @@ STATUS=['Like', 'Dislike']
 
 db.define_table('post',
                 Field('title', 'string', requires=IS_NOT_EMPTY()),
-                Field('attachment', 'upload', requires=[ IS_UPLOAD_FILENAME(extension='mp3|mp4|wmv|wav|avi|aac')]),
+                Field('attachment', 'upload', requires=[IS_NOT_EMPTY(), IS_UPLOAD_FILENAME(extension='mp3|mp4|wmv|wav|avi|aac')]),
                 Field('album_art', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png')))),
                 Field('description', requires=IS_NOT_EMPTY()),
                 Field('genre', 'string', requires=IS_IN_SET(GENRES)),
