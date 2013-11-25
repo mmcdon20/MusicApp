@@ -137,11 +137,6 @@ def friends():
 def genre():
     genre = request.args(0).replace('_',' ')
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
-
-    if not posts:
-        session.flash = "Genre '" + genre + "' does not exist"
-        redirect(URL('index'))
-
     return locals()
 
 def post():

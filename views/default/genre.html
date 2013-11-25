@@ -15,6 +15,10 @@
 <!-- Post Area ======================================================-->
 <div class="row">
     <div class="span12 post-container">
-        {{=musicItemList(posts)}}
+        {{if posts:}}
+            {{=musicItemList(posts)}}
+        {{else:}}
+            <p>No {{=genre}} jams have been uploaded.</p>
+        {{pass}}
     </div>
 </div>
