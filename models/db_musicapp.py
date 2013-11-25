@@ -191,7 +191,12 @@ def personItemList(relations, userId):
     return XML(x)
 
 def personItem(person):
+    # If user has no profile, create one.
     info = db(db.profile_info.person==person.id).select().first()
+    if info is None:
+        db.profile_info.insert(person=person.id)
+        info = db(db.profile_info.person==person.id).select().first()
+
     name        = fullname(person.id)
     profileRef  = URL('profile', args=person.id)
     location    = info.user_location or 'N/A'
