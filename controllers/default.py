@@ -170,6 +170,15 @@ def post():
     form = crud.create(db.comment_item)
 
     comments = db((db.comment_item.item_id==post.id) & (db.comment_item.item_type=='post')).select()
+    
+    editForm = SQLFORM(db.post,
+            record = db(db.post.id == postId).select().first(),
+            submit_button = 'Save Changes')
+    editForm.custom.submit['_class'] = 'btn-primary'
+    
+    if editForm.process().accepted:
+        redirect(URL('post', args=postId))
+    
     return locals()
 
 @auth.requires_login()

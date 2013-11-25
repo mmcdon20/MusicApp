@@ -6,6 +6,9 @@
 <div class="row">
     <div class="span12 post-container">
         {{=musicitem(post)}}
+        {{if auth.user and auth.user.id == post.created_by :}}
+            <a href="#editModal" role="button" data-toggle="modal">edit post</a>
+        {{pass}}
     </div>
 </div>
 
@@ -16,4 +19,26 @@
 
 {{if auth.user:}}
     {{=form}}
+{{pass}}
+
+{{if auth.user and auth.user.id == post.created_by :}}
+    <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        {{=editForm.custom.begin}}
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Revise Jam</h3>
+        </div>
+        <div class="modal-body">
+            Title: <div>{{=editForm.custom.widget.title}}</div>
+            Attachment: <div>{{=editForm.custom.widget.attachment}}</div>
+            Album Art: <div>{{=editForm.custom.widget.album_art}}</div>
+            Description: <div>{{=editForm.custom.widget.description}}</div>
+            Genre: <div>{{=editForm.custom.widget.genre}}</div>
+            Artist: <div>{{=editForm.custom.widget.artist}}</div>
+        </div>
+        <div class="modal-footer">
+            {{=editForm.custom.submit}}
+        </div>
+        {{=editForm.custom.end}}
+    </div>
 {{pass}}
