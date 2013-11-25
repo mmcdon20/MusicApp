@@ -19,8 +19,7 @@ db.define_table('post',
 
 db.define_table('comment_item',
                 Field('body', 'text', requires=IS_NOT_EMPTY()),
-                Field('item_id', 'integer', readable=False, writable=False),
-                Field('item_type', 'text', readable=False, writable=False, requires=IS_IN_SET(['post','profile'])),
+                Field('item_id', db.post, readable=False, writable=False),
                 Field('post', db.post, readable=False, writable=False),
                 auth.signature
 )

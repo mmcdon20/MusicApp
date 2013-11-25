@@ -166,10 +166,9 @@ def post():
         redirect(URL('index'))
 
     db.comment_item.item_id.default = post.id
-    db.comment_item.item_type.default = 'post'
     form = crud.create(db.comment_item)
 
-    comments = db((db.comment_item.item_id==post.id) & (db.comment_item.item_type=='post')).select()
+    comments = db(db.comment_item.item_id==post.id).select()
     
     editForm = SQLFORM(db.post,
             record = db(db.post.id == postId).select().first(),
