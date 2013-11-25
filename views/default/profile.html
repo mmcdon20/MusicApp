@@ -8,7 +8,7 @@
                 <div class="prof-left">
                     <h3 class="center">{{=fullname(userId)}}</h3>
                     {{if info.picture:}}
-                        <img src="{{=URL('download', args=user.picture)}}" alt="{{=fullname(userId)}}">
+                        <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(userId)}}">
                     {{else:}}
                         <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(userId)}}">
                     {{pass}}
