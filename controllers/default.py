@@ -18,10 +18,6 @@ def about():
     
     return locals()
 
-def register():
-    form = auth.register()
-    return locals()
-
 def search():
     query = request.args(0)
 
@@ -148,15 +144,6 @@ def genre():
 
     return locals()
 
-@auth.requires_login()
-def upload():
-    form = SQLFORM(db.post)
-    
-    if form.process().accepted:
-        redirect(URL("post", args=form.vars.id)) 
-    
-    return locals()
-
 def post():
     postId = request.args(0, cast=int)
     post = db.post(int(postId))
@@ -180,17 +167,6 @@ def post():
     
     return locals()
 
-@auth.requires_login()
-def edit_post():
-    postId = request.args(0, cast=int)
-    post = db.post(int(postId)) or redirect(URL('index'))
-    #post = db(db.post.id == postId).select() or redirect(URL('index'))
-
-    if post.created_by != auth.user.id:
-        redirect(URL('index'))
-
-    form = SQLFORM(db.post, post).process()
-    return locals()
 
 def user():
     """
