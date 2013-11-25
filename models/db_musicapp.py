@@ -10,9 +10,10 @@ STATUS=['Like', 'Dislike']
 db.define_table('post',
                 Field('title', 'string', requires=IS_NOT_EMPTY()),
                 Field('attachment', 'upload', requires=[IS_NOT_EMPTY(), IS_UPLOAD_FILENAME(extension='mp3|mp4|wmv|wav|avi|aac')]),
+                Field('album_art', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png')))),
                 Field('description', requires=IS_NOT_EMPTY()),
                 Field('genre', 'string', requires=IS_IN_SET(GENRES)),
-                Field('artist', 'string'),
+                Field('artist', 'string', requires=IS_NOT_EMPTY()),
                 auth.signature
 )
 
@@ -98,9 +99,8 @@ def musicitem(post):
 
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
-    imageref    = URL('static', 'images/tn_placeholder.png')
     genrelink   = str(A(post.genre, _href=URL('genre', args=post.genre)))
-    postlink    = str(A(post.title, _href=postref))
+    postlink    = str(A(post.title + " by " + post.artist, _href=postref))
     date        = prettydate(post.created_on)
     userlink    = str(A(name,_href=URL('profile',args=post.created_by)))
     description = post.description
@@ -109,6 +109,11 @@ def musicitem(post):
     #Count the number of likes and the number of dislikes
     likes = str(db((db.post_like.status == 'Like') & (db.post_like.post==post.id)).count())
     dislikes = str(db((db.post_like.status == 'Dislike') & (db.post_like.post==post.id)).count())
+    
+    if post.album_art:
+        imageref = URL('download',args=post.album_art)
+    else:
+        imageref = URL('static', 'images/tn_placeholder.png')
 
     if auth.user:
         buttons = music_item_status_buttons(post)
@@ -118,7 +123,7 @@ def musicitem(post):
     return XML("""
             <li class="media">
                 <a class="pull-left" href=\"""" + postref + """">
-                    <img class="media-object" src=\"""" + imageref + """">
+                    <img class="media-object" width="150px" src=\"""" + imageref + """">
                 </a>
                 <div class="media-body">
                     <h4 >""" + genrelink + " / " + postlink + """</h4>
