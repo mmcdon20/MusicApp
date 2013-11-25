@@ -29,6 +29,7 @@ def search():
         query = query.replace('_',' ')
         results = db(db.post.title.contains(query)|
                      db.post.description.contains(query)|
+                     db.post.artist.contains(query)|
                      db.post.genre.contains(query)).select()
         people = db(db.auth_user.first_name.contains(query.split(), all=False)|
                     db.auth_user.last_name.contains(query.split(), all=False)).select()
