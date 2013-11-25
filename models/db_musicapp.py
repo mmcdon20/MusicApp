@@ -12,6 +12,7 @@ db.define_table('post',
                 Field('attachment', 'upload', requires=[IS_NOT_EMPTY(), IS_UPLOAD_FILENAME(extension='mp3|mp4|wmv|wav|avi|aac')]),
                 Field('description', requires=IS_NOT_EMPTY()),
                 Field('genre', 'string', requires=IS_IN_SET(GENRES)),
+                Field('artist', 'string'),
                 auth.signature
 )
 

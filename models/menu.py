@@ -37,7 +37,7 @@ _setupTuneMenu()
 searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
 searchForm.custom.widget.query['_placeholder']= 'Search'
 
-uploadForm   = SQLFORM(db.post)
+uploadForm  = SQLFORM(db.post)
 
 if searchForm.process().accepted:
     redirect(URL("search", args=searchForm.vars.query))
