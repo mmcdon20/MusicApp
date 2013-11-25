@@ -3,20 +3,29 @@
 <div class="row">
     <div class="span12 info-header">
         <div class="info-content">
-            <h3>Search</h3>
-            <p>
-                You can find songs by searching. Try searching an artist, title, or genre.
-            </p>
+            <h1>Search</h1>
         </div>
     </div>
 </div>
 
 <!-- Content area -->
 <div class="row">
-    <div class="span12 post-container">
-        {{if results:}}
-            <h3>Results</h3>
-            {{=musicItemList(results)}}
-        {{pass}}
+    <div class="span4">
+        <h3>Jammers</h3>
+        <div class="friend-container">
+            {{if people:}}
+                {{=personItemListNoRelation(people)}}
+            {{else:}}
+                No jammers matched your search.
+            {{pass}}
+        </div>
     </div>
+    <div class="span8 post-container">
+        <h3>Jams</h3>
+        {{if results:}}
+            {{=musicItemList(results)}}
+        {{else:}}
+            No jams matched your search.
+        {{pass}}
+    </div>     
 </div>

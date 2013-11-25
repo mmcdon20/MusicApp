@@ -176,6 +176,16 @@ def commentItemList(comments):
 
     return XML(x)
 
+def personItemListNoRelation(people):
+    x = '<ul class="media-list">'
+
+    for person in people:
+        x += personItem(person)
+
+    x += '</ul>'
+
+    return XML(x)
+
 def personItemList(relations, userId):
     x = '<ul class="media-list">'
 

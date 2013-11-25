@@ -35,7 +35,7 @@ def _setupTuneMenu():
 _setupTuneMenu()
 
 searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
-searchForm.custom.widget.query['_placeholder']= 'Search'
+searchForm.custom.widget.query['_placeholder']= 'Search for jams and jammers'
 
 uploadForm  = SQLFORM(db.post)
 

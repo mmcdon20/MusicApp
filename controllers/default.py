@@ -30,8 +30,11 @@ def search():
         results = db(db.post.title.contains(query)|
                      db.post.description.contains(query)|
                      db.post.genre.contains(query)).select()
+        people = db(db.auth_user.first_name.contains(query.split(), all=False)|
+                    db.auth_user.last_name.contains(query.split(), all=False)).select()
     else:
         results = None
+        people = None
 
     searchForm.custom.widget.query['_value']= query
 
