@@ -55,7 +55,10 @@ db.define_table('user_status',
 ###############################################################################
 from gluon.contrib.populate import populate
 if not db(db.auth_user).count():
-    populate(db.auth_user,100)
+    populate(db.auth_user,50)
+if not db(db.post).count():
+    populate(db.post,100)
+
 
 ###############################################################################
 #                   Helper Functions                                          #
