@@ -53,11 +53,11 @@ db.define_table('user_status',
 ###############################################################################
 #                   Populate DEVELOPMENT ONLY!                                #
 ###############################################################################
-from gluon.contrib.populate import populate
-if not db(db.auth_user).count():
-    populate(db.auth_user,50)
-if not db(db.post).count():
-    populate(db.post,100)
+#from gluon.contrib.populate import populate
+#if not db(db.auth_user).count():
+#    populate(db.auth_user,50)
+#if not db(db.post).count():
+#    populate(db.post,100)
 
 
 ###############################################################################
