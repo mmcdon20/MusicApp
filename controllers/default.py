@@ -71,13 +71,15 @@ def profile():
     # Calculated Profile Fields
     age = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
 
-    jams = db(db.post_like).select(join=db.post.on((db.post_like.post==db.post.id)&
-                                                   (db.post.created_by==userId)&
-                                                   (db.post_like.status=='Like')))
-    cans = db(db.post_like).select(join=db.post.on((db.post_like.post==db.post.id)&
-                                                   (db.post.created_by==userId)&
-                                                   (db.post_like.status=='Dislike')))
-    score = len(jams) - len(cans)
+    jams = db((db.post_like.post==db.post.id)&
+              (db.post.created_by==userId)&
+              (db.post_like.status=='Like')).count()
+    
+    cans = db((db.post_like.post==db.post.id)&
+              (db.post.created_by==userId)&
+              (db.post_like.status=='Dislike')).count()
+    
+    score = jams - cans
 
     # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
     if auth.user and auth.user.id == userId:
@@ -112,25 +114,19 @@ def profile():
 @auth.requires_login()
 def friends():
     userId = auth.user.id
-    friendRelations = db(db.relationship.created_by == userId).select()
-    friendRelations = friendRelations & db(db.relationship.person == userId).select()
-    friendIds = set()
     
-    for friend in friendRelations:
-        if friend.created_by == auth.user.id:
-            friendIds.add(friend.person)
-        else:
-            friendIds.add(friend.created_by)
+    friendRelations = db((db.relationship.created_by == userId) | 
+                         (db.relationship.person == userId)).select()
     
-    friendUploads = db(db.post.created_by == 0).select()
-    friendComments = db(db.comment_item.created_by == 0).select()
+    friendUploads = db(((db.relationship.person == db.post.created_by)|(db.relationship.created_by == db.post.created_by)) &
+                       ((db.relationship.person == userId)|(db.relationship.created_by == userId)) &
+                       (db.post.created_by != userId)
+                       ).select(db.post.ALL, orderby=~db.post.created_on, distinct=True)
     
-    for friend in friendIds:
-        friendUploads = friendUploads & db(db.post.created_by == friend).select()
-        friendComments = friendComments & db(db.comment_item.created_by == friend).select()
-    
-    friendUploads = friendUploads.sort(lambda row: row.created_on, True)
-    friendComments = friendComments.sort(lambda row: row.created_on, True)
+    friendComments = db(((db.relationship.person == db.comment_item.created_by)|(db.relationship.created_by == db.comment_item.created_by)) &
+                        ((db.relationship.person == userId)|(db.relationship.created_by == userId)) &
+                        (db.comment_item.created_by != userId)
+                        ).select(db.comment_item.ALL, orderby=~db.comment_item.created_on, distinct=True) #, limitby=(0, 5))
     
     return locals()
 
