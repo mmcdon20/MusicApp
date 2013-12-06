@@ -8,24 +8,33 @@
     </div>
 </div>
 
-<!-- Content area -->
 <div class="row">
-    <div class="span4">
-        <h3>Jammers</h3>
-        <div class="friend-container">
-            {{if people:}}
-                {{=personItemListNoRelation(people)}}
-            {{else:}}
-                No jammers matched your search.
-            {{pass}}
-        </div>
+    <div class="span12">
+        <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#jam"><i class="icon-music"></i> Jams</a></li>
+                <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Jammers</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active post-container" id="jam">
+                    <h3>Jams</h3>
+                    {{if results:}}
+                        {{=musicItemList(results)}}
+                    {{else:}}
+                        No jams matched your search.
+                    {{pass}}                     
+                </div>
+                <div class="tab-pane" id="jammer">
+                    <h3>Jammers</h3>
+                    <div class="friend-container">
+                        {{if people:}}
+                            {{=personItemListNoRelation(people)}}
+                        {{else:}}
+                            No jammers matched your search.
+                        {{pass}}
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
-    <div class="span8 post-container">
-        <h3>Jams</h3>
-        {{if results:}}
-            {{=musicItemList(results)}}
-        {{else:}}
-            No jams matched your search.
-        {{pass}}
-    </div>     
 </div>

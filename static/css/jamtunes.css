@@ -167,3 +167,6 @@ div.content {
 .modal form {
     margin-bottom: 0;
 }
+
+/* Fix for icons in tab css */
+.nav-tabs > .active > a > [class^="icon-"],.nav-tabs>.active>a>[class*=" icon-"] { background-image:url("../images/glyphicons-halflings.png") !important; }

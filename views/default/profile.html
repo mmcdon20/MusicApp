@@ -67,13 +67,25 @@
 
 <!-- User content area -->
 <div class="row">
-    <div class="span4">
-        <div class="friend-container">
-            {{=personItemList(friendRelations, userId)}}
-        </div>
-    </div>
-    <div class="span8 post-container">
-        {{=musicItemList(uploads)}}
+    <div class="span12">
+        <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#jam"><i class="icon-music"></i> Jams</a></li>
+                <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Friends</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active post-container" id="jam">
+                    <h3>Jams</h3>
+                    {{=musicItemList(uploads)}}                  
+                </div>
+                <div class="tab-pane" id="jammer">
+                    <h3>Friends</h3>
+                    <div class="friend-container">
+                        {{=personItemList(friendRelations, userId)}}
+                    </div>
+                </div>
+            </div>
+        </div>        
     </div>
 </div>
 
