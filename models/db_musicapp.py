@@ -161,38 +161,38 @@ def music_item_status_buttons(post):
     return like_btn + dislike_btn
 
 def musicItemList(posts):
-    x = '<ul class="media-list">'
+    x = '<div class="post-container"><ul class="media-list">'
 
     for post in posts:
         x += musicitem(post)
         #x += music_item_status_buttons(post)
 
-    x += '</ul>'
+    x += '</ul></div>'
 
     return XML(x)
 
 def commentItemList(comments):
-    x = '<ul class="media-list">'
+    x = '<div class=""><ul class="media-list">'
 
     for comment in comments:
         x += commentitem(comment)
 
-    x += '</ul>'
+    x += '</ul></div>'
 
     return XML(x)
 
 def personItemListNoRelation(people):
-    x = '<ul class="media-list">'
+    x = '<div class="friend-container"><ul class="media-list">'
 
     for person in people:
         x += personItem(person)
 
-    x += '</ul>'
+    x += '</ul></div>'
 
     return XML(x)
 
 def personItemList(relations, userId):
-    x = '<ul class="media-list">'
+    x = '<div class="friend-container"><ul class="media-list">'
 
     for relation in relations:
         # Create a LI with the correct person
@@ -201,7 +201,7 @@ def personItemList(relations, userId):
         else:
             x += personItem(db.auth_user(relation.created_by))
 
-    x += '</ul>'
+    x += '</ul></div>'
 
     return XML(x)
 

@@ -16,8 +16,7 @@
                 <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Jammers</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active post-container" id="jam">
-                    <h3>Jams</h3>
+                <div class="tab-pane active" id="jam">
                     {{if results:}}
                         {{=musicItemList(results)}}
                     {{else:}}
@@ -25,14 +24,11 @@
                     {{pass}}                     
                 </div>
                 <div class="tab-pane" id="jammer">
-                    <h3>Jammers</h3>
-                    <div class="friend-container">
-                        {{if people:}}
-                            {{=personItemListNoRelation(people)}}
-                        {{else:}}
-                            No jammers matched your search.
-                        {{pass}}
-                    </div>
+                    {{if people:}}
+                        {{=personItemListNoRelation(people)}}
+                    {{else:}}
+                        No jammers matched your search.
+                    {{pass}}
                 </div>
             </div>
         </div>        

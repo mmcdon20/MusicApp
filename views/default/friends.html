@@ -15,16 +15,13 @@
                 <li><a data-toggle="tab" href="#comment"><i class="icon-comment"></i> Comments</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active post-container" id="jam">
-                    <h3>Friend Jams</h3>
+                <div class="tab-pane active" id="jam">
                     {{=musicItemList(friendUploads)}}
                 </div>
-                <div class="tab-pane friend-container" id="friend">
-                    <h3>Friends</h3>
+                <div class="tab-pane" id="friend">
                     {{=personItemList(friendRelations, auth.user.id)}}
                 </div>
                 <div class="tab-pane" id="comment">
-                    <h3>Friend Comments</h3>
                     {{=commentItemList(friendComments)}}
                 </div>
             </div>

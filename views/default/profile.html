@@ -74,15 +74,11 @@
                 <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Friends</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active post-container" id="jam">
-                    <h3>Jams</h3>
+                <div class="tab-pane active" id="jam">
                     {{=musicItemList(uploads)}}                  
                 </div>
                 <div class="tab-pane" id="jammer">
-                    <h3>Friends</h3>
-                    <div class="friend-container">
-                        {{=personItemList(friendRelations, userId)}}
-                    </div>
+                    {{=personItemList(friendRelations, userId)}}
                 </div>
             </div>
         </div>        
