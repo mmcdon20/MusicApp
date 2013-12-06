@@ -19,22 +19,20 @@ def about():
     return locals()
 
 def search():
-    query = request.args(0)
+    query = request.vars.query
 
     if query:
-        query = query.replace('_',' ')
-        results = db(db.post.title.contains(query)|
-                     db.post.description.contains(query)|
-                     db.post.artist.contains(query)|
-                     db.post.genre.contains(query)).select()
-        people = db(db.auth_user.first_name.contains(query.split(), all=False)|
-                    db.auth_user.last_name.contains(query.split(), all=False)).select()
+        results = db(db.post.title.contains(query.split())|
+                     db.post.description.contains(query.split())|
+                     db.post.artist.contains(query.split())|
+                     db.post.genre.contains(query.split())).select()
+        people = db(db.auth_user.first_name.contains(query.split())|
+                    db.auth_user.last_name.contains(query.split())).select()
     else:
         results = None
         people = None
 
     searchForm.custom.widget.query['_value']= query
-
     return locals()
 
 # This func is getting ugly, prob want to break it down eventually

@@ -43,7 +43,7 @@ searchForm.custom.widget.query['_placeholder']= 'Search for jams and jammers'
 uploadForm  = SQLFORM(db.post)
 
 if searchForm.process().accepted:
-    redirect(URL("search", args=searchForm.vars.query))
+    redirect(URL("search", vars=dict(query=searchForm.vars.query)))
 
 if uploadForm.process().accepted:
     redirect(URL("post", args=uploadForm.vars.id))
