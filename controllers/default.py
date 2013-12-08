@@ -44,12 +44,11 @@ def profile():
         if db.auth_user(userId) is None:
             session.flash = "User not found"
             redirect(URL('index'))
+    elif auth.user:
+        redirect(URL("profile", args=auth.user.id))
     else:
-        if auth.user:
-            redirect(URL("profile", args=auth.user.id))
-        else:
-            session.flash = "Must login to view your profile"
-            redirect(URL("index"))
+        session.flash = "Must login to view your profile"
+        redirect(URL("index"))
     #### END handle request
     ############################################################
     
@@ -209,6 +208,10 @@ def data():
       LOAD('default','data.load',args='tables',ajax=True,user_signature=True)
     """
     return dict(form=crud())
+
+def friendly():
+    
+    return locals()
 
 def addFriend():
     db.relationship.insert(person=request.post_vars.person, status=request.post_vars.status)
