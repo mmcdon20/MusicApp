@@ -62,8 +62,9 @@ def profile():
     info = db(db.profile_info.person==userId).select().first()
     uploads = db(db.post.created_by == userId).select()
     status =  db(db.user_status.person==userId).select().first().body
-    friendRelations = db(db.relationship.created_by == userId).select()
-    friendRelations = friendRelations & db(db.relationship.person == userId).select()
+
+    friendRelations = db((db.relationship.created_by == userId)|
+                         (db.relationship.person == userId)).select()
 
     # Calculated Profile Fields
     age = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
