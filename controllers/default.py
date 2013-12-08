@@ -19,19 +19,9 @@ def about():
     return locals()
 
 def search():
-    query = request.vars.query
-
-    if query:
-        results = db(db.post.title.contains(query.split())|
-                     db.post.description.contains(query.split())|
-                     db.post.artist.contains(query.split())|
-                     db.post.genre.contains(query.split())).select()
-        people = db(db.auth_user.first_name.contains(query.split())|
-                    db.auth_user.last_name.contains(query.split())).select()
-    else:
-        results = None
-        people = None
-
+    query   = request.vars.query or ""
+    results = search_jams(query)
+    people  = search_jammers(query)
     searchForm.custom.widget.query['_value']= query
     return locals()
 
@@ -58,26 +48,13 @@ def profile():
     if db(db.user_status.person==userId).select().first() is None:
         db.user_status.insert(person=userId, body="Some things are better left unsaid")
     
-    user = db.auth_user(userId)
-    info = db(db.profile_info.person==userId).select().first()
-    uploads = db(db.post.created_by == userId).select()
-    status =  db(db.user_status.person==userId).select().first().body
-
-    friendRelations = db((db.relationship.created_by == userId)|
-                         (db.relationship.person == userId)).select()
-
-    # Calculated Profile Fields
-    age = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
-
-    jams = db((db.post_like.post==db.post.id)&
-              (db.post.created_by==userId)&
-              (db.post_like.status=='Like')).count()
-    
-    cans = db((db.post_like.post==db.post.id)&
-              (db.post.created_by==userId)&
-              (db.post_like.status=='Dislike')).count()
-    
-    score = jams - cans
+    user            = user(userId)
+    info            = user_info(userId)
+    uploads         = user_uploads(userId)
+    status          = user_status(userId)
+    friendRelations = friend_relations(userId)
+    score           = user_jams(userId) - user_cans(userId)
+    age             = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
 
     # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
     if auth.user and auth.user.id == userId:
@@ -112,20 +89,9 @@ def profile():
 @auth.requires_login()
 def friends():
     userId = auth.user.id
-    
-    friendRelations = db((db.relationship.created_by == userId) | 
-                         (db.relationship.person == userId)).select()
-    
-    friendUploads = db(((db.relationship.person == db.post.created_by)|(db.relationship.created_by == db.post.created_by)) &
-                       ((db.relationship.person == userId)|(db.relationship.created_by == userId)) &
-                       (db.post.created_by != userId)
-                       ).select(db.post.ALL, orderby=~db.post.created_on, distinct=True)
-    
-    friendComments = db(((db.relationship.person == db.comment_item.created_by)|(db.relationship.created_by == db.comment_item.created_by)) &
-                        ((db.relationship.person == userId)|(db.relationship.created_by == userId)) &
-                        (db.comment_item.created_by != userId)
-                        ).select(db.comment_item.ALL, orderby=~db.comment_item.created_on, distinct=True) #, limitby=(0, 5))
-    
+    friendRelations = friend_relations(userId)
+    friendUploads = friend_uploads(userId)
+    friendComments = friend_comments(userId)
     return locals()
 
 def genre():
