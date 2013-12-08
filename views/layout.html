@@ -249,7 +249,7 @@ sheets -->
     var changeStatus = function(commentid, status) {
         $.ajax({
               type: "POST",
-              url: "{{=URL('changeStatus')}}",
+              url: "{{=URL('ajax','changeStatus')}}",
               data: { commentid: commentid, status: status }
             })
         .done(function( msg ) {

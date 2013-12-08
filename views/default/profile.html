@@ -55,8 +55,8 @@
         </div>
         {{if auth.user and auth.user.id != user.id:}}
         <div class="prof-button-area">
-            {{if relationId:}}
-                {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relationId) +');')}}
+            {{if relation_id:}}
+                {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation_id) +');')}}
             {{else:}}
                 {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
             {{pass}}
@@ -130,7 +130,7 @@
     var addFriend = function(person, status) {
         $.ajax({
               type: "POST",
-              url: "{{=URL('addFriend')}}",
+              url: "{{=URL('ajax','addFriend')}}",
               data: { person: person, status: status }
             })
         .done(function( msg ) {
@@ -140,18 +140,8 @@
     var removeFriend = function(rid) {
         $.ajax({
               type: "POST",
-              url: "{{=URL('removeFriend')}}",
+              url: "{{=URL('ajax','removeFriend')}}",
               data: { rid: rid }
-            })
-        .done(function( msg ) {
-            location.reload();
-        });
-    }
-    var editStatus = function(status) {
-        $.ajax({
-              type: "POST",
-              url: "{{=URL('editStatus')}}",
-            data: { user: {{=str(auth.user.id)}}, status: status }
             })
         .done(function( msg ) {
             location.reload();
