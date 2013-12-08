@@ -6,11 +6,11 @@
         <div class="row">
             <div class="span3">
                 <div class="prof-left">
-                    <h3 class="center">{{=fullname(userId)}}</h3>
+                    <h3 class="center">{{=fullname(user_id)}}</h3>
                     {{if info.picture:}}
-                        <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(userId)}}">
+                        <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(user_id)}}">
                     {{else:}}
-                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(userId)}}">
+                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(user_id)}}">
                     {{pass}}
                 </div>
             </div>
@@ -23,7 +23,7 @@
                         <tr><td>Location:</td><td>{{=info.user_location or 'N/A'}}</td></tr>
                         <tr><td>Genres:</td><td>{{=info.genres or 'N/A'}}</td></tr>
                     </table>
-                    {{if auth.user and auth.user.id == userId:}}<a href="#editModal" role="button" data-toggle="modal">edit info</a>{{pass}}
+                    {{if auth.user and auth.user.id == user_id:}}<a href="#editModal" role="button" data-toggle="modal">edit info</a>{{pass}}
                 </div>
             </div>
             <div class="span6">
@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="span6 status">
                             <h3>{{=status}}</h3>
-                            {{if auth.user and auth.user.id == userId:}}<a href="#statusModal" role="button" data-toggle="modal">edit status</a>{{pass}}
+                            {{if auth.user and auth.user.id == user_id:}}<a href="#statusModal" role="button" data-toggle="modal">edit status</a>{{pass}}
                         </div>
                     </div>
                     <div class="row user-stats">
@@ -78,7 +78,7 @@
                     {{=musicItemList(uploads)}}                  
                 </div>
                 <div class="tab-pane" id="jammer">
-                    {{=personItemList(friendRelations, userId)}}
+                    {{=personItemList(friendRelations, user_id)}}
                 </div>
             </div>
         </div>        
@@ -87,41 +87,41 @@
 
 <!-- Edit profile modal -->
 <!-- Modals -->
-{{if auth.user and auth.user.id == userId :}}
+{{if auth.user and auth.user.id == user_id :}}
     <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{=editForm.custom.begin}}
+        {{=edit_form.custom.begin}}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Edit your profile</h3>
         </div>
         <div class="modal-body">
-            <!--First Name: <div>{{=editForm.custom.widget.first_name}}</div>-->
-            <!--Last Name: <div>{{=editForm.custom.widget.last_name}}</div>-->
-            Birthdate: <div>{{=editForm.custom.widget.birthdate}}</div>
-            Gender: <div>{{=editForm.custom.widget.gender}}</div>
-            Location: <div>{{=editForm.custom.widget.user_location}}</div>
-            Genres: <div>{{=editForm.custom.widget.genres}}</div>
-            Picture: <div>{{=editForm.custom.widget.picture}}</div>
+            <!--First Name: <div>{{=edit_form.custom.widget.first_name}}</div>-->
+            <!--Last Name: <div>{{=edit_form.custom.widget.last_name}}</div>-->
+            Birthdate: <div>{{=edit_form.custom.widget.birthdate}}</div>
+            Gender: <div>{{=edit_form.custom.widget.gender}}</div>
+            Location: <div>{{=edit_form.custom.widget.user_location}}</div>
+            Genres: <div>{{=edit_form.custom.widget.genres}}</div>
+            Picture: <div>{{=edit_form.custom.widget.picture}}</div>
         </div>
         <div class="modal-footer">
-            {{=editForm.custom.submit}}
+            {{=edit_form.custom.submit}}
         </div>
-        {{=editForm.custom.end}}
+        {{=edit_form.custom.end}}
     </div>
     <!--=============================Status Modal -->
     <div id="statusModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{=statusForm.custom.begin}}
+        {{=status_form.custom.begin}}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Edit your status</h3>
         </div>
         <div class="modal-body">
-            Status: <div>{{=statusForm.custom.widget.body}}</div>
+            Status: <div>{{=status_form.custom.widget.body}}</div>
         </div>
         <div class="modal-footer">
-            {{=statusForm.custom.submit}}
+            {{=status_form.custom.submit}}
         </div>
-        {{=statusForm.custom.end}}
+        {{=status_form.custom.end}}
     </div>
 {{pass}}
 

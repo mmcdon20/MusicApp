@@ -1,5 +1,4 @@
 {{extend 'layout.html'}}
-{{from gluon.contrib.autolinks import expand_one}}
 
 <h2>{{=post.title}}</h2>
 
@@ -23,22 +22,22 @@
 
 {{if auth.user and auth.user.id == post.created_by :}}
     <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{=editForm.custom.begin}}
+        {{=edit_form.custom.begin}}
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             <h3 id="myModalLabel">Revise Jam</h3>
         </div>
         <div class="modal-body">
-            Title: <div>{{=editForm.custom.widget.title}}</div>
-            Attachment: <div>{{=editForm.custom.widget.attachment}}</div>
-            Album Art: <div>{{=editForm.custom.widget.album_art}}</div>
-            Description: <div>{{=editForm.custom.widget.description}}</div>
-            Genre: <div>{{=editForm.custom.widget.genre}}</div>
-            Artist: <div>{{=editForm.custom.widget.artist}}</div>
+            Title: <div>{{=edit_form.custom.widget.title}}</div>
+            Attachment: <div>{{=edit_form.custom.widget.attachment}}</div>
+            Album Art: <div>{{=edit_form.custom.widget.album_art}}</div>
+            Description: <div>{{=edit_form.custom.widget.description}}</div>
+            Genre: <div>{{=edit_form.custom.widget.genre}}</div>
+            Artist: <div>{{=edit_form.custom.widget.artist}}</div>
         </div>
         <div class="modal-footer">
-            {{=editForm.custom.submit}}
+            {{=edit_form.custom.submit}}
         </div>
-        {{=editForm.custom.end}}
+        {{=edit_form.custom.end}}
     </div>
 {{pass}}

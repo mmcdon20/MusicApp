@@ -10,8 +10,8 @@ def search_jammers(query):
     return db(db.auth_user.first_name.contains(query.split()) |
               db.auth_user.last_name.contains(query.split())).select()
 
-def user(user_id):
-    return db.auth_user(userId)
+def user_account(user_id):
+    return db.auth_user(user_id)
 
 def user_info(user_id):
     return db(db.profile_info.person==user_id).select().first()

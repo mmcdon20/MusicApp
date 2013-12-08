@@ -15,7 +15,6 @@ def index():
     return locals()
 
 def about():
-    
     return locals()
 
 def search():
@@ -30,8 +29,8 @@ def profile():
     ############################################################
     #### Handle request and set the profile userId
     if request.args:
-        userId = request.args(0, cast=int)
-        if db.auth_user(userId) is None:
+        user_id = request.args(0, cast=int)
+        if db.auth_user(user_id) is None:
             session.flash = "User not found"
             redirect(URL('index'))
     elif auth.user:
@@ -43,55 +42,55 @@ def profile():
     ############################################################
     
     # If user has no profile, create one.
-    if db(db.profile_info.person==userId).select().first() is None:
-        db.profile_info.insert(person=userId)
-    if db(db.user_status.person==userId).select().first() is None:
-        db.user_status.insert(person=userId, body="Some things are better left unsaid")
+    if db(db.profile_info.person==user_id).select().first() is None:
+        db.profile_info.insert(person=user_id)
+    if db(db.user_status.person==user_id).select().first() is None:
+        db.user_status.insert(person=user_id, body="Some things are better left unsaid")
     
-    user            = user(userId)
-    info            = user_info(userId)
-    uploads         = user_uploads(userId)
-    status          = user_status(userId)
-    friendRelations = friend_relations(userId)
-    score           = user_jams(userId) - user_cans(userId)
+    user            = user_account(user_id)
+    info            = user_info(user_id)
+    uploads         = user_uploads(user_id)
+    status          = user_status(user_id)
+    friendRelations = friend_relations(user_id)
+    score           = user_jams(user_id) - user_cans(user_id)
     age             = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
 
     # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
-    if auth.user and auth.user.id == userId:
+    if auth.user and auth.user.id == user_id:
         # TODO, make double table form for user name edit right here!
-        editForm = SQLFORM(db.profile_info,
-            record = db(db.profile_info.person==userId).select().first(),
+        edit_form = SQLFORM(db.profile_info,
+            record = db(db.profile_info.person==user_id).select().first(),
             fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
             submit_button = 'Save Changes'
         )
-        editForm.custom.submit['_class'] = 'btn-primary'
-        if editForm.process().accepted:
+        edit_form.custom.submit['_class'] = 'btn-primary'
+        if edit_form.process().accepted:
             redirect(URL('profile', args=auth.user.id))
 
-        statusForm = SQLFORM(db.user_status,
-                            record = db(db.user_status.person==userId).select().first(),
+        status_form = SQLFORM(db.user_status,
+                            record = db(db.user_status.person==user_id).select().first(),
                             fields = ['body'],
                             submit_button='Update Status')
-        statusForm.custom.submit['_class'] = 'btn-primary'
-        if statusForm.process().accepted:
+        status_form.custom.submit['_class'] = 'btn-primary'
+        if status_form.process().accepted:
             redirect(URL('profile', args=auth.user.id))
             
     # IF this profile is not mine, find if we have a relation
-    relationId = None
-    if auth.user and userId != auth.user.id:
-        rows = db((db.relationship.person==userId) & (db.relationship.created_by==auth.user.id)).select()
-        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==userId)).select()
+    relation_id = None
+    if auth.user and user_id != auth.user.id:
+        rows = db((db.relationship.person==user_id) & (db.relationship.created_by==auth.user.id)).select()
+        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==user_id)).select()
         if len(rows) > 0:
-            relationId = rows[0].id
+            relation_id = rows[0].id
 
     return locals()
 
 @auth.requires_login()
 def friends():
-    userId = auth.user.id
-    friendRelations = friend_relations(userId)
-    friendUploads = friend_uploads(userId)
-    friendComments = friend_comments(userId)
+    user_id   = auth.user.id
+    relations = friend_relations(user_id)
+    uploads   = friend_uploads(user_id)
+    comments  = friend_comments(user_id)
     return locals()
 
 def genre():
@@ -100,25 +99,24 @@ def genre():
     return locals()
 
 def post():
-    postId = request.args(0, cast=int)
-    post = db.post(int(postId))
+    post_id = request.args(0, cast=int)
+    post = db.post(post_id)
 
     if not post:
         session.flash = "Post does not exist"
         redirect(URL('index'))
 
-    db.comment_item.item_id.default = post.id
+    db.comment_item.item_id.default = post_id
     form = crud.create(db.comment_item)
-
-    comments = db(db.comment_item.item_id==post.id).select()
+    comments = post_comments(post_id)
     
-    editForm = SQLFORM(db.post,
-            record = db(db.post.id == postId).select().first(),
+    edit_form = SQLFORM(db.post,
+            record = db(db.post.id == post_id).select().first(),
             submit_button = 'Save Changes')
-    editForm.custom.submit['_class'] = 'btn-primary'
+    edit_form.custom.submit['_class'] = 'btn-primary'
     
-    if editForm.process().accepted:
-        redirect(URL('post', args=postId))
+    if edit_form.process().accepted:
+        redirect(URL('post', args=post_id))
     
     return locals()
 
