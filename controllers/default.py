@@ -59,27 +59,28 @@ def profile():
     if auth.user and auth.user.id == user_id:
         # TODO, make double table form for user name edit right here!
         edit_form = SQLFORM(db.profile_info,
-            record = db(db.profile_info.person==user_id).select().first(),
-            fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
-            submit_button = 'Save Changes'
-        )
+                            record = db(db.profile_info.person==user_id).select().first(),
+                            fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
+                            submit_button = 'Save Changes')
+        status_form = SQLFORM(db.user_status,
+                              record = db(db.user_status.person==user_id).select().first(),
+                              fields = ['body'],
+                              submit_button='Update Status')
+        
         edit_form.custom.submit['_class'] = 'btn-primary'
+        status_form.custom.submit['_class'] = 'btn-primary'
+        
         if edit_form.process().accepted:
             redirect(URL('profile', args=auth.user.id))
-
-        status_form = SQLFORM(db.user_status,
-                            record = db(db.user_status.person==user_id).select().first(),
-                            fields = ['body'],
-                            submit_button='Update Status')
-        status_form.custom.submit['_class'] = 'btn-primary'
+            
         if status_form.process().accepted:
             redirect(URL('profile', args=auth.user.id))
             
     # IF this profile is not mine, find if we have a relation
     relation_id = None
     if auth.user and user_id != auth.user.id:
-        rows = db((db.relationship.person==user_id) & (db.relationship.created_by==auth.user.id)).select()
-        rows = rows & db((db.relationship.person==auth.user.id) & (db.relationship.created_by==user_id)).select()
+        rows = db(((db.relationship.person==user_id) & (db.relationship.created_by==auth.user.id))|
+                  ((db.relationship.person==auth.user.id) & (db.relationship.created_by==user_id))).select()
         if len(rows) > 0:
             relation_id = rows[0].id
 
