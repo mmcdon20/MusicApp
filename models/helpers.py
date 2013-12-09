@@ -24,15 +24,15 @@ def comment_item(comment):
     return XML("""
         <li class="media">
             <div class="pull-left">
-                <img class="media-object" height="50" width="50" src=\"""" + imageref + """" />
+                <img class="media-object" height="50" width="50" src="{imageref}" />
             </div>
             <div class="media-body">
-                """ + text + """
+                {text}
                 <br />
-                """ + userlink + " / " + date + " / " + postlink + """
+                {userlink} / {date} / {postlink}
             </div>
         </li>
-    """)
+    """.format(**locals()))
 
 def music_item(post):
 
@@ -61,22 +61,22 @@ def music_item(post):
 
     return XML("""
             <li class="media">
-                <a class="pull-left" href=\"""" + postref + """">
-                    <img class="media-object" width="150px" src=\"""" + imageref + """">
+                <a class="pull-left" href="{postref}">
+                    <img class="media-object" width="150px" src="{imageref}">
                 </a>
                 <div class="media-body">
-                    <h4 >""" + genrelink + " / " + postlink + """</h4>
-                    <h5>""" + date + " | Posted by " + userlink + """</h5>
-                    <p>""" + description + """</p>
+                    <h4 >{genrelink} / {postlink}</h4>
+                    <h5>{date} | Posted by {userlink}</h5>
+                    <p>{description}</p>
                     <audio controls="controls" style="max-width:100%">
-                        <source src=\"""" + attachref + """">
+                        <source src="{attachref}">
                     </audio>
                 </div>
             </li>
             <h6>Likes/dislikes</h6>
-            <h6>"""+likes+"/"+dislikes+"""</h6>
-            """+buttons+"""
-    """)
+            <h6>{likes}/{dislikes}</h6>
+            {buttons}
+    """.format(**locals()))
 
 def music_item_status_buttons(post):
     record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
@@ -104,7 +104,6 @@ def music_item_list(posts):
 
     for post in posts:
         x += music_item(post)
-        #x += music_item_status_buttons(post)
 
     x += '</ul></div>'
 
@@ -164,34 +163,34 @@ def person_item(person):
 
     return XML("""
             <li class="media">
-                <a class="pull-left" href=\"""" + profileRef + """">
-                    <img class="media-object" src=\"""" + imageref + """">
+                <a class="pull-left" href="{profileRef}">
+                    <img class="media-object" src="{imageref}">
                 </a>
                 <div class="media-body">
                     <div class="person-info">
-                        <h5>""" + name + """</h5>
+                        <h5>{name}</h5>
                         <table>
                             <tr>
                                 <td>Location:</td>
-                                <td>""" + location + """</td>
+                                <td>{location}</td>
                             </tr>
                             <tr>
                                 <td>Gender:</td>
-                                <td>""" + gender + """</td>
+                                <td>{gender}</td>
                             </tr>
                             <tr>
                                 <td>Age:</td>
-                                <td>""" + age + """</td>
+                                <td>{age}</td>
                             </tr>
                             <tr>
                                 <td>Genres:</td>
-                                <td>""" + genres + """</td>
+                                <td>{genres}</td>
                             </tr>
                         </table>
                     </div>
                 </div>
             </li>
-    """)
+    """.format(**locals()))
 
 def user_bar():
     action = '/user'
