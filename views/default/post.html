@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="span12 post-container">
-        {{=musicitem(post)}}
+        {{=music_item(post)}}
         {{if auth.user and auth.user.id == post.created_by :}}
             <a href="#editModal" role="button" data-toggle="modal">edit post</a>
         {{pass}}
@@ -14,7 +14,7 @@
 <hr/>
 
 <h4>Discussion</h4>
-{{=commentItemList(comments)}}
+{{=comment_item_list(comments)}}
 
 {{if auth.user:}}
     {{=form}}

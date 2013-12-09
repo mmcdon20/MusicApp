@@ -21,7 +21,7 @@ def search():
     query   = request.vars.query or ""
     results = search_jams(query)
     people  = search_jammers(query)
-    searchForm.custom.widget.query['_value']= query
+    search_form.custom.widget.query['_value']= query
     return locals()
 
 # This func is getting ugly, prob want to break it down eventually
@@ -47,13 +47,13 @@ def profile():
     if db(db.user_status.person==user_id).select().first() is None:
         db.user_status.insert(person=user_id, body="Some things are better left unsaid")
     
-    user            = user_account(user_id)
-    info            = user_info(user_id)
-    uploads         = user_uploads(user_id)
-    status          = user_status(user_id)
-    friendRelations = friend_relations(user_id)
-    score           = user_jams(user_id) - user_cans(user_id)
-    age             = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
+    user      = user_account(user_id)
+    info      = user_info(user_id)
+    uploads   = user_uploads(user_id)
+    status    = user_status(user_id)
+    relations = friend_relations(user_id)
+    score     = user_jams(user_id) - user_cans(user_id)
+    age       = prettydate(info.birthdate).replace(' years ago', '') # TODO: better!
 
     # Create edit profile form TODO: move to a function  PLEASE DO NOT EDIT BELOW THIS LINE FOR NOW
     if auth.user and auth.user.id == user_id:

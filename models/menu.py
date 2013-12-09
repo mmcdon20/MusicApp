@@ -19,36 +19,36 @@ response.meta.generator = 'Web2py Web Framework'
 ## your http://google.com/analytics id
 response.google_analytics_id = None
 
-def _setupTuneMenu():
+def setup_tune_menu():
     # shortcuts
     app = request.application
     ctr = request.controller
 
-    genreList = []
+    genre_list = []
 
     for genre in GENRES:
-        toAdd = (genre, False, URL('genre', args=genre))
-        genreList.append(toAdd)
+        to_add = (genre, False, URL('genre', args=genre))
+        genre_list.append(to_add)
 
-    response.menu += [(SPAN('Tunes', _class='highlighted'), False, URL('index'), genreList)]
+    response.menu += [(SPAN('Tunes', _class='highlighted'), False, URL('index'), genre_list)]
 
-_setupTuneMenu()
+setup_tune_menu()
 
 auth.settings.login_next = URL('profile')
 auth.settings.register_next = URL('profile')
 
-searchForm  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
-searchForm.custom.widget.query['_placeholder']= 'Search for jams and jammers'
+search_form  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
+search_form.custom.widget.query['_placeholder']= 'Search for jams and jammers'
 
-uploadForm  = SQLFORM(db.post)
+upload_form  = SQLFORM(db.post)
 
-if searchForm.process().accepted:
-    redirect(URL("search", vars=dict(query=searchForm.vars.query)))
+if search_form.process().accepted:
+    redirect(URL("search", vars=dict(query=search_form.vars.query)))
 
-if uploadForm.process().accepted:
-    redirect(URL("post", args=uploadForm.vars.id))
+if upload_form.process().accepted:
+    redirect(URL("post", args=upload_form.vars.id))
 
 if not auth.user:
-    registerForm = auth.register()
+    register_form = auth.register()
 
 if "auth" in locals(): auth.wikimenu()

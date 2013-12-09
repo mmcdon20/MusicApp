@@ -18,14 +18,14 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="jam">
                     {{if results:}}
-                        {{=musicItemList(results)}}
+                        {{=music_item_list(results)}}
                     {{else:}}
                         No jams matched your search.
                     {{pass}}                     
                 </div>
                 <div class="tab-pane" id="jammer">
                     {{if people:}}
-                        {{=personItemListNoRelation(people)}}
+                        {{=person_item_list_no_relation(people)}}
                     {{else:}}
                         No jammers matched your search.
                     {{pass}}

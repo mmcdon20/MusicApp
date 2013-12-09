@@ -8,7 +8,7 @@ def fullname(user_id):
         return "Unknown"
     return "%(first_name)s %(last_name)s" % db.auth_user(user_id)
 
-def commentitem(comment):
+def comment_item(comment):
     text = comment.body
     name = fullname(comment.created_by)
     date = prettydate(comment.created_on)
@@ -34,7 +34,7 @@ def commentitem(comment):
         </li>
     """)
 
-def musicitem(post):
+def music_item(post):
 
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
@@ -99,52 +99,52 @@ def music_item_status_buttons(post):
 
     return like_btn + dislike_btn
 
-def musicItemList(posts):
+def music_item_list(posts):
     x = '<div class="post-container"><ul class="media-list">'
 
     for post in posts:
-        x += musicitem(post)
+        x += music_item(post)
         #x += music_item_status_buttons(post)
 
     x += '</ul></div>'
 
     return XML(x)
 
-def commentItemList(comments):
+def comment_item_list(comments):
     x = '<div class=""><ul class="media-list">'
 
     for comment in comments:
-        x += commentitem(comment)
+        x += comment_item(comment)
 
     x += '</ul></div>'
 
     return XML(x)
 
-def personItemListNoRelation(people):
+def person_item_list_no_relation(people):
     x = '<div class="friend-container"><ul class="media-list">'
 
     for person in people:
-        x += personItem(person)
+        x += person_item(person)
 
     x += '</ul></div>'
 
     return XML(x)
 
-def personItemList(relations, userId):
+def person_item_list(relations, user_id):
     x = '<div class="friend-container"><ul class="media-list">'
 
     for relation in relations:
         # Create a LI with the correct person
-        if relation.created_by == userId:
-            x += personItem(db.auth_user(relation.person))
+        if relation.created_by == user_id:
+            x += person_item(db.auth_user(relation.person))
         else:
-            x += personItem(db.auth_user(relation.created_by))
+            x += person_item(db.auth_user(relation.created_by))
 
     x += '</ul></div>'
 
     return XML(x)
 
-def personItem(person):
+def person_item(person):
     # If user has no profile, create one.
     info = db(db.profile_info.person==person.id).select().first()
     if info is None:
@@ -193,7 +193,7 @@ def personItem(person):
             </li>
     """)
 
-def userBar():
+def user_bar():
     action = '/user'
     if auth.user:
         logout=A('logout', _href=action+'/logout')
