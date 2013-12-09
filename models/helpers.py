@@ -191,17 +191,3 @@ def person_item(person):
                 </div>
             </li>
     """.format(**locals()))
-
-def user_bar():
-    action = '/user'
-    if auth.user:
-        logout=A('logout', _href=action+'/logout')
-        profile=A('profile', _href=action+'/profile')
-        password=A('change password', _href=action+'/change_password')
-        bar = SPAN(auth.user.email, ' | ', profile, ' | ', password, ' | ', logout, _class='auth_navbar')
-    else:
-        login=A('login', _href=action+'/user/login')
-        register=A('register',_href=action+'/register')
-        lost_password=A('lost password', _href=action+'/request_reset_password')
-        bar = SPAN(' ', login, ' | ', register, ' | ', lost_password, _class='auth_navbar')
-    return bar
