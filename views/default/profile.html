@@ -1,74 +1,42 @@
 {{extend 'layout.html'}}
 
-<!-- Profile Header Area -->
-<div class="row">
-    <div class="span12 prof-header info-header">
-        <div class="row">
-            <div class="span3">
-                <div class="prof-left">
-                    <h3 class="center">{{=fullname(user_id)}}</h3>
-                    {{if info.picture:}}
-                        <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(user_id)}}">
-                    {{else:}}
-                        <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(user_id)}}">
-                    {{pass}}
-                </div>
-            </div>
-            <div class="span3">
-                <div class="prof-center">
-                    <table class="table">
-                        <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
-                        <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
-                        <tr><td>Gender:</td><td>{{=info.gender or 'N/A'}}</td></tr>
-                        <tr><td>Location:</td><td>{{=info.user_location or 'N/A'}}</td></tr>
-                        <tr><td>Genres:</td><td>{{=info.genres or 'N/A'}}</td></tr>
-                    </table>
-                    {{if auth.user and auth.user.id == user_id:}}<a href="#editModal" role="button" data-toggle="modal">edit info</a>{{pass}}
-                </div>
-            </div>
-            <div class="span6">
-                <div class="prof-right">
-                    <div class="row">
-                        <div class="span6 status">
-                            <h3>{{=status}}</h3>
-                            {{if auth.user and auth.user.id == user_id:}}<a href="#statusModal" role="button" data-toggle="modal">edit status</a>{{pass}}
-                        </div>
-                    </div>
-                    <div class="row user-stats">
-                        <div class="span6">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <h3>{{=score}}</h3>
-                                        <h4>Jam Power</h4>
-                                    </td>
-                                    <td>
-                                        <h3>{{=len(uploads)}}</h3>
-                                        <h4>Total Tunes</h4>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{if auth.user and auth.user.id != user.id:}}
-        <div class="prof-button-area">
-            {{if relation_id:}}
-                {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation_id) +');')}}
-            {{else:}}
-                {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
-            {{pass}}
-        </div>
-        {{pass}}
-    </div>
-</div>
-
 <!-- User content area -->
 <div class="row">
-    <div class="span12">
-        <div class="tabbable tabs-left">
+    <div class="span3 center" >
+        {{if info.picture:}}
+            <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(user_id)}}">
+        {{else:}}
+            <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(user_id)}}">
+        {{pass}}
+        <h3>{{=fullname(user_id)}}</h3>
+        <h4>{{=status}}</h4>
+
+        <table class="table table-striped">
+            <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
+            <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
+            <tr><td>Gender:</td><td>{{=info.gender or 'N/A'}}</td></tr>
+            <tr><td>Location:</td><td>{{=info.user_location or 'N/A'}}</td></tr>
+            <tr><td>Genres:</td><td>{{=info.genres or 'N/A'}}</td></tr>
+            <tr><td>Jam Power:</td><td>{{=score}}</td></tr>
+            <tr><td>Total Tunes:</td><td>{{=len(uploads)}}</td></tr>
+        </table>
+        
+        <div class="btn-group">
+            {{if auth.user and auth.user.id == user_id:}}<a href="#editModal" class="btn" role="button" data-toggle="modal">edit info</a>{{pass}}        
+            {{if auth.user and auth.user.id == user_id:}}<a href="#statusModal" class="btn" role="button" data-toggle="modal">edit status</a>{{pass}}
+            {{if auth.user and auth.user.id != user.id:}}
+                {{if relation_id:}}
+                    {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation_id) +');')}}
+                {{else:}}
+                    {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
+                {{pass}}
+            {{pass}}
+        </div>
+        <hr />
+        
+    </div>
+    <div class="span9">
+        <div class="tabbable tabs-top">
             <ul class="nav nav-tabs" data-tabs="tabs">
                 <li class="active"><a data-toggle="tab" href="#jam"><i class="icon-music"></i> Jams</a></li>
                 <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Friends</a></li>
