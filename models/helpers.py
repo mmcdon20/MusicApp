@@ -12,8 +12,8 @@ def comment_item(comment):
     text = comment.body
     name = fullname(comment.created_by)
     date = prettydate(comment.created_on)
-    userlink = str(A(name,_href=URL('profile',args=comment.created_by)))
-    postlink = str(A("link",_href=URL('post',args=comment.item_id)))
+    userlink = A(name,_href=URL('profile',args=comment.created_by))
+    postlink = A("link",_href=URL('post',args=comment.item_id))
     info = db(db.profile_info.person==comment.created_by).select().first()
 
     if info.picture:
@@ -38,16 +38,16 @@ def music_item(post):
 
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
-    genrelink   = str(A(post.genre, _href=URL('genre', args=post.genre)))
-    postlink    = str(A(post.title + " by " + post.artist, _href=postref))
+    genrelink   = A(post.genre, _href=URL('genre', args=post.genre))
+    postlink    = A(post.title + " by " + post.artist, _href=postref)
     date        = prettydate(post.created_on)
-    userlink    = str(A(name,_href=URL('profile',args=post.created_by)))
+    userlink    = A(name,_href=URL('profile',args=post.created_by))
     description = post.description
     attachref   = URL('download',args=post.attachment)
 
     #Count the number of likes and the number of dislikes
-    likes = str(db((db.post_like.status == 'Like') & (db.post_like.post==post.id)).count())
-    dislikes = str(db((db.post_like.status == 'Dislike') & (db.post_like.post==post.id)).count())
+    likes = db((db.post_like.status == 'Like') & (db.post_like.post==post.id)).count()
+    dislikes = db((db.post_like.status == 'Dislike') & (db.post_like.post==post.id)).count()
     
     if post.album_art:
         imageref = URL('download',args=post.album_art)
