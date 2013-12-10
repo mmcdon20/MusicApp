@@ -40,13 +40,7 @@ def profile():
         redirect(URL("index"))
     #### END handle request
     ############################################################
-    
-    # If user has no profile, create one.
-    if db(db.profile_info.person==user_id).select().first() is None:
-        db.profile_info.insert(person=user_id)
-    if db(db.user_status.person==user_id).select().first() is None:
-        db.user_status.insert(person=user_id, body="Some things are better left unsaid")
-    
+
     user      = user_account(user_id)
     info      = user_info(user_id)
     uploads   = user_uploads(user_id)
