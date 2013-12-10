@@ -1,6 +1,6 @@
 .post-container li {
     padding: 6px;
-    border: 1px solid gray;
+    border: 1px solid lightgray;
 }
 
 .post-container .media-body {
@@ -29,12 +29,13 @@
     bottom: 0;
 }
 
+/*
 .friend-container {
-    border: 1px solid gray;
-}
+    border: 1px solid lightgray;
+}*/
 
 .friend-container {
-    padding: 7px;
+    padding: 0px;
 }
 
 .friend-container img.media-object {
@@ -109,7 +110,7 @@ div.status h3 {
     min-height: 118px;
     display: table-cell;
     vertical-align: middle;
-    color: gray;
+    color: lightgray;
 }
 
 div.prof-right table {
@@ -136,9 +137,9 @@ div.user-stats h3, div.user-stats h4 {
 
 
 .info-header {
-    border-bottom: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
     margin-bottom: 30px;
     position: relative;
 }

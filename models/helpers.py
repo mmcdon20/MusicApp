@@ -45,10 +45,6 @@ def music_item(post):
     description = post.description
     attachref   = URL('download',args=post.attachment)
 
-    #Count the number of likes and the number of dislikes
-    likes = db((db.post_like.status == 'Like') & (db.post_like.post==post.id)).count()
-    dislikes = db((db.post_like.status == 'Dislike') & (db.post_like.post==post.id)).count()
-    
     if post.album_art:
         imageref = URL('download',args=post.album_art)
     else:
@@ -61,9 +57,10 @@ def music_item(post):
 
     return XML("""
             <li class="media">
-                <a class="pull-left" href="{postref}">
+                <div class="pull-left center">
                     <img class="media-object" width="150px" src="{imageref}">
-                </a>
+                    {buttons}
+                </div>
                 <div class="media-body">
                     <h4 >{genrelink} / {postlink}</h4>
                     <h5>{date} | Posted by {userlink}</h5>
@@ -73,9 +70,7 @@ def music_item(post):
                     </audio>
                 </div>
             </li>
-            <h6>Likes/dislikes</h6>
-            <h6>{likes}/{dislikes}</h6>
-            {buttons}
+            
     """.format(**locals()))
 
 def music_item_status_buttons(post):
@@ -93,11 +88,13 @@ def music_item_status_buttons(post):
     
     like_icon = I(_class='icon-thumbs-up')
     dislike_icon = I(_class='icon-thumbs-down')
+    fave_icon = I(_class='icon-heart')
     
-    like_btn = str(A(like_icon+'Jam It', _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
-    dislike_btn = str(A(dislike_icon+'Can It', _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
+    like_btn = str(A(like_icon, _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
+    dislike_btn = str(A(dislike_icon, _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
+    fave_btn = str(A(fave_icon, _class='btn'))
 
-    return like_btn + dislike_btn
+    return '<div class="btn-group">' + like_btn + dislike_btn + fave_btn + '</div>'
 
 def music_item_list(posts):
     x = '<div class="post-container"><ul class="media-list">'

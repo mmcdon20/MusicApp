@@ -4,9 +4,9 @@
 <div class="row">
     <div class="span3 center" >
         {{if info.picture:}}
-            <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(user_id)}}">
+            <img src="{{=URL('download', args=info.picture)}}" alt="{{=fullname(user_id)}}" class="img-rounded">
         {{else:}}
-            <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(user_id)}}">
+            <img src="{{=URL('static', 'images/user_placeholder.jpg')}}" alt="{{=fullname(user_id)}}" class="img-rounded">
         {{pass}}
         <h3>{{=fullname(user_id)}}</h3>
         <h4>{{=status}}</h4>
