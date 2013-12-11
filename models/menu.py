@@ -39,7 +39,8 @@ auth.settings.register_onaccept.append(lambda form: db.profile_info.insert(perso
 auth.settings.register_onaccept.append(lambda form: db.user_status.insert(person=form.vars.id, body="Some things are better left unsaid"))
 
 search_form  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')
-search_form.custom.widget.query['_placeholder']= 'Search for jams and jammers'
+search_form.custom.widget.query['_placeholder']= 'Search'
+search_form.custom.widget.query['_class']='search-query'
 
 upload_form  = SQLFORM(db.post)
 
