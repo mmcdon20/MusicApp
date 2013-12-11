@@ -11,7 +11,7 @@
 
 
 def index():
-    posts = db(db.post).select(orderby=~db.post.created_on)
+    posts = recent_posts(0,5)
     return locals()
 
 def about():
@@ -21,6 +21,8 @@ def search():
     query   = request.vars.query or ""
     results = search_jams(query)
     people  = search_jammers(query)
+    results_count = count_search_jams(query)
+    people_count  = count_search_jammers(query)
     search_form.custom.widget.query['_value']= query
     return locals()
 

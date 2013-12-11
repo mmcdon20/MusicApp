@@ -1,16 +1,17 @@
 {{extend 'layout.html'}}
 <!-- Top Info area -->
 <div class="row">
-    <div class="span12 info-header">
-        <div class="info-content">
-            <h1>Welcome to jamTunes!</h1>
-        </div>
+    <div class="span3 center">
+        <h3>Site Info</h3>
+        <table class="table table-condensed table-bordered table-hover">
+            <tr><th>Users:</th><td>{{=count_users()}}</td></tr>
+            <tr><th>Posts:</th><td>{{=count_posts()}}</td></tr>
+            <tr><th>Comments:</th><td>{{=count_comments()}}</td></tr>
+            <tr><th>Statuses:</th><td>{{=count_statuses()}}</td></tr>
+        </table>
     </div>
-</div>
-
-<!-- Content area -->
-<div class="row">
-    <div class="span12 post-container">
+    <div class="span9">
+        <h3>Recent Posts</h3>
         {{=music_item_list(posts)}}
     </div>
 </div>

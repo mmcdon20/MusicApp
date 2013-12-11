@@ -1,14 +1,38 @@
 # coding: utf8
 
+def count_users():
+    return db(db.auth_user).count()
+
+def count_posts():
+    return db(db.post).count()
+
+def count_comments():
+    return db(db.comment_item).count()
+
+def count_statuses():
+    return db(db.user_status).count()
+
+def count_search_jams(query):
+    return db(query_jams(query)).count()
+
+def count_search_jammers(query):
+    return db(query_jammers(query)).count()
+
 def search_jams(query):
-    return db(db.post.title.contains(query) |
-              db.post.description.contains(query) |
-              db.post.artist.contains(query) |
-              db.post.genre.contains(query)).select()
+    return db(query_jams(query)).select()
 
 def search_jammers(query):
-    return db(db.auth_user.first_name.contains(query.split()) |
-              db.auth_user.last_name.contains(query.split())).select()
+    return db(query_jammers(query)).select()
+
+def query_jams(query):
+    return (db.post.title.contains(query) |
+            db.post.description.contains(query) |
+            db.post.artist.contains(query) |
+            db.post.genre.contains(query))
+
+def query_jammers(query):
+    return (db.auth_user.first_name.contains(query.split()) |
+            db.auth_user.last_name.contains(query.split()))
 
 def user_account(user_id):
     return db.auth_user(user_id)
@@ -50,3 +74,6 @@ def friend_comments(user_id):
 
 def post_comments(post_id):
     return db(db.comment_item.item_id==post_id).select()
+
+def recent_posts(start, count):
+    return db(db.post).select(orderby=~db.post.created_on, limitby=(start,start+count))
