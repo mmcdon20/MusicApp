@@ -11,14 +11,14 @@
         <h3>{{=fullname(user_id)}}</h3>
         <h4>{{=status}}</h4>
 
-        <table class="table table-striped">
-            <tr><td>Joined:</td><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
-            <tr><td>Age:</td><td>{{=age or 'N/A'}}</td></tr>
-            <tr><td>Gender:</td><td>{{=info.gender or 'N/A'}}</td></tr>
-            <tr><td>Location:</td><td>{{=info.user_location or 'N/A'}}</td></tr>
-            <tr><td>Genres:</td><td>{{=info.genres or 'N/A'}}</td></tr>
-            <tr><td>Jam Power:</td><td>{{=score}}</td></tr>
-            <tr><td>Total Tunes:</td><td>{{=len(uploads)}}</td></tr>
+        <table class="table table-condensed table-bordered table-hover">
+            <tr><th>Joined:</th><td>{{=prettydate(user.created_on) or 'N/A'}}</td></tr>
+            <tr><th>Age:</th><td>{{=age or 'N/A'}}</td></tr>
+            <tr><th>Gender:</th><td>{{=info.gender or 'N/A'}}</td></tr>
+            <tr><th>Location:</th><td>{{=info.user_location or 'N/A'}}</td></tr>
+            <tr><th>Genres:</th><td>{{=info.genres or 'N/A'}}</td></tr>
+            <tr><th>Jam Power:</th><td>{{=score}}</td></tr>
+            <tr><th>Total Tunes:</th><td>{{=len(uploads)}}</td></tr>
         </table>
         
         <div class="btn-group">
