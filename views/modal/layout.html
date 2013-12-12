@@ -1,0 +1,93 @@
+{{if auth.user:}}
+  <div id="uploadModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{upload_form.custom.submit['_class'] = 'btn-primary'}}
+    {{=upload_form.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Upload a file</h3>
+      </div>
+      <div class="modal-body">
+        Title: <div>{{=upload_form.custom.widget.title}}</div>
+        Attachment: <div>{{=upload_form.custom.widget.attachment}}</div>
+        Album Art: <div>{{=upload_form.custom.widget.album_art}}</div>
+        Artist: <div>{{=upload_form.custom.widget.artist}}</div>
+        Description: <div>{{=upload_form.custom.widget.description}}</div>
+        Genre: <div>{{=upload_form.custom.widget.genre}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=upload_form.custom.submit}}
+      </div>
+    {{=upload_form.custom.end}}
+  </div>  
+  <div id="passwordModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{password_form = auth.change_password()}}
+    {{password_form.custom.submit['_class'] = 'btn-primary'}}
+    {{=password_form.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Change password</h3>
+      </div>
+      <div class="modal-body">
+        Old Password: <div>{{=password_form.custom.widget.old_password}}</div>
+        New Password: <div>{{=password_form.custom.widget.new_password}}</div>
+        Verify Password: <div>{{=password_form.custom.widget.new_password2}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=password_form.custom.submit}}
+      </div>
+    {{=password_form.custom.end}}
+  </div>  
+{{else:}}
+  <div id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{login_form = auth.login()}}
+    {{login_form.custom.submit['_class'] = 'btn-primary'}}
+    {{=login_form.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Login</h3>
+      </div>
+      <div class="modal-body">
+        E-mail: <div>{{=login_form.custom.widget.email}}</div>
+        Password: <div>{{=login_form.custom.widget.password}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=login_form.custom.submit}}
+      </div>
+    {{=login_form.custom.end}}
+  </div>
+  <div id="resetModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{reset_form = auth.request_reset_password()}}
+    {{reset_form.custom.submit['_class'] = 'btn-primary'}}
+    {{=reset_form.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Request a password reset</h3>
+      </div>
+      <div class="modal-body">
+        E-mail: <div>{{=reset_form.custom.widget.email}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=reset_form.custom.submit}}
+      </div>
+    {{=reset_form.custom.end}}
+  </div> 
+  <div id="registerModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    {{register_form.custom.submit['_class'] = 'btn-primary'}}
+    {{=register_form.custom.begin}}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Register</h3>
+      </div>
+      <div class="modal-body">
+        First Name: <div>{{=register_form.custom.widget.first_name}}</div>
+        Last Name: <div>{{=register_form.custom.widget.last_name}}</div>
+        Email: <div>{{=register_form.custom.widget.email}}</div>
+        Password: <div>{{=register_form.custom.widget.password}}</div>
+        Verify Password: <div>{{=register_form.custom.widget.password_two}}</div>
+      </div>
+      <div class="modal-footer">
+        {{=register_form.custom.submit}}
+      </div>
+    {{=register_form.custom.end}}
+  </div> 
+{{pass}}
