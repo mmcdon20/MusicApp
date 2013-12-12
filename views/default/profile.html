@@ -55,43 +55,7 @@
 
 <!-- Edit profile modal -->
 <!-- Modals -->
-{{if auth.user and auth.user.id == user_id :}}
-    <div id="editModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{=edit_form.custom.begin}}
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Edit your profile</h3>
-        </div>
-        <div class="modal-body">
-            <!--First Name: <div>{{=edit_form.custom.widget.first_name}}</div>-->
-            <!--Last Name: <div>{{=edit_form.custom.widget.last_name}}</div>-->
-            Birthdate: <div>{{=edit_form.custom.widget.birthdate}}</div>
-            Gender: <div>{{=edit_form.custom.widget.gender}}</div>
-            Location: <div>{{=edit_form.custom.widget.user_location}}</div>
-            Genres: <div>{{=edit_form.custom.widget.genres}}</div>
-            Picture: <div>{{=edit_form.custom.widget.picture}}</div>
-        </div>
-        <div class="modal-footer">
-            {{=edit_form.custom.submit}}
-        </div>
-        {{=edit_form.custom.end}}
-    </div>
-    <!--=============================Status Modal -->
-    <div id="statusModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        {{=status_form.custom.begin}}
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="myModalLabel">Edit your status</h3>
-        </div>
-        <div class="modal-body">
-            Status: <div>{{=status_form.custom.widget.body}}</div>
-        </div>
-        <div class="modal-footer">
-            {{=status_form.custom.submit}}
-        </div>
-        {{=status_form.custom.end}}
-    </div>
-{{pass}}
+{{include 'modal/profile.html'}}
 
 {{if auth.user:}}
 <script>
