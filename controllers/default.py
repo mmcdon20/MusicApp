@@ -14,9 +14,6 @@ def index():
     posts = recent_posts(0,5)
     return locals()
 
-def about():
-    return locals()
-
 def search():
     query   = request.vars.query or ""
     results = search_jams(query)

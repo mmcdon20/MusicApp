@@ -7,7 +7,10 @@ def navbar(auth_navbar):
     
     li_about = LI(A(I(_class="icon-info-sign"), ' ',
                           current.T("About"),
-                          _href=URL("about"), _rel="nofollow"))
+                          _href=URL("#aboutModal"),
+                          _role="Button", 
+                          _rel="nofollow",
+                          **{'_data-toggle':'modal'}))
     
     if not user:
         toggletext = "Login/Register"
