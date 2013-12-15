@@ -9,7 +9,6 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
-
 def index():
     posts = recent_posts(0,5)
     return locals()
@@ -68,6 +67,8 @@ def profile():
             
     if auth.user and user_id != auth.user.id:
         relation = user_relation(user_id)
+    else:
+        relation = None
         
     return locals()
 

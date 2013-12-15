@@ -3,6 +3,34 @@
 #                   Helper Functions                                          #
 ###############################################################################
 
+def profile_buttons(user_id):
+    relation = user_relation(user_id)
+    edit = status = friend = uid = ctype = ''
+    
+    if auth.user and auth.user.id == user_id:
+        edit = '<a href="#editModal" class="btn" role="button" data-toggle="modal">edit info</a>'
+        status = '<a href="#statusModal" class="btn" role="button" data-toggle="modal">edit status</a>'
+        ctype = 'btn-group'
+    elif auth.user and auth.user.id != user_id:
+        uid = '<INPUT type="hidden" id="user_id" name="user_id" value="{user_id}"/>'.format(**locals())
+        aj = "ajax('/{app}/ajax/profileButtons', ['user_id'], 'target');".format(app=request.application)
+        if relation:
+            friend = '<a class="btn" role="button" onclick="{aj}">Remove friend</a>'.format(**locals())
+        else:
+            friend = '<a class="btn btn-primary" role="button" onclick="{aj}">Add friend</a>'.format(**locals())
+    
+    return XML("""
+    <div id="target">
+        <div id="buttons" class="{ctype}">
+            {edit}
+            {status}
+            {uid}
+            {friend}
+        </div>    
+    </div>
+    """.format(**locals()))
+
+
 def fullname(user_id):
     if user_id is None:
         return "Unknown"
@@ -93,8 +121,9 @@ def music_item_status_buttons(post):
     like_btn = str(A(like_icon, _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
     dislike_btn = str(A(dislike_icon, _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
     fave_btn = str(A(fave_icon, _class='btn'))
+    btn_id = 'button' + str(post.id)
 
-    return '<div class="btn-group">' + like_btn + dislike_btn + fave_btn + '</div>'
+    return '<div id="' + btn_id + '" class="btn-group">' + like_btn + dislike_btn + fave_btn + '</div>'
 
 def music_item_list(posts):
     x = '<div class="post-container"><ul class="media-list">'

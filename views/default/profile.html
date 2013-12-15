@@ -21,17 +21,8 @@
             <tr><th>Total Tunes:</th><td>{{=len(uploads)}}</td></tr>
         </table>
         
-        <div class="btn-group">
-            {{if auth.user and auth.user.id == user_id:}}<a href="#editModal" class="btn" role="button" data-toggle="modal">edit info</a>{{pass}}        
-            {{if auth.user and auth.user.id == user_id:}}<a href="#statusModal" class="btn" role="button" data-toggle="modal">edit status</a>{{pass}}
-            {{if auth.user and auth.user.id != user.id:}}
-                {{if relation:}}
-                    {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation.id) +');')}}
-                {{else:}}
-                    {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
-                {{pass}}
-            {{pass}}
-        </div>
+        {{=profile_buttons(user_id)}}
+        
         <hr />
         
     </div>
@@ -56,28 +47,3 @@
 <!-- Edit profile modal -->
 <!-- Modals -->
 {{include 'modal/profile.html'}}
-
-{{if auth.user:}}
-<script>
-    var addFriend = function(person, status) {
-        $.ajax({
-              type: "POST",
-              url: "{{=URL('ajax','addFriend')}}",
-              data: { person: person, status: status }
-            })
-        .done(function( msg ) {
-            location.reload();
-        });
-    }
-    var removeFriend = function(rid) {
-        $.ajax({
-              type: "POST",
-              url: "{{=URL('ajax','removeFriend')}}",
-              data: { rid: rid }
-            })
-        .done(function( msg ) {
-            location.reload();
-        });
-    }
-</script>
-{{pass}}
