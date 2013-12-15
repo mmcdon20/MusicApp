@@ -56,20 +56,22 @@ def user_cans(user_id):
               (db.post.created_by==user_id) &
               (db.post_like.status=='Dislike')).count()
 
+def user_relation(user_id):
+    return db((db.relationship.person==user_id)&
+              (db.relationship.created_by==auth.user.id)
+              ).select().first() or None
+
 def friend_relations(user_id):
-    return db((db.relationship.created_by == user_id) | 
-              (db.relationship.person == user_id)).select()
+    return db(db.relationship.created_by == user_id).select()
 
 def friend_uploads(user_id):
-    return db(((db.relationship.person == db.post.created_by)|(db.relationship.created_by == db.post.created_by)) &
-              ((db.relationship.person == user_id)|(db.relationship.created_by == user_id)) &
-              (db.post.created_by != user_id)
+    return db((db.relationship.created_by == user_id)&
+              (db.relationship.person == db.post.created_by)
               ).select(db.post.ALL, orderby=~db.post.created_on, distinct=True)
 
 def friend_comments(user_id):
-    return db(((db.relationship.person == db.comment_item.created_by)|(db.relationship.created_by == db.comment_item.created_by)) &
-              ((db.relationship.person == user_id)|(db.relationship.created_by == user_id)) &
-              (db.comment_item.created_by != user_id)
+    return db((db.relationship.created_by == user_id)&
+              (db.relationship.person == db.comment_item.created_by)
               ).select(db.comment_item.ALL, orderby=~db.comment_item.created_on, distinct=True)
 
 def post_comments(post_id):

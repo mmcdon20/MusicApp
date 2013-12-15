@@ -25,8 +25,8 @@
             {{if auth.user and auth.user.id == user_id:}}<a href="#editModal" class="btn" role="button" data-toggle="modal">edit info</a>{{pass}}        
             {{if auth.user and auth.user.id == user_id:}}<a href="#statusModal" class="btn" role="button" data-toggle="modal">edit status</a>{{pass}}
             {{if auth.user and auth.user.id != user.id:}}
-                {{if relation_id:}}
-                    {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation_id) +');')}}
+                {{if relation:}}
+                    {{=A('Remove Friend', _class='btn', _onclick='removeFriend(' + str(relation.id) +');')}}
                 {{else:}}
                     {{=A('Add Friend', _class='btn btn-primary', _onclick='addFriend(' + str(user.id) +',"friend");')}}
                 {{pass}}
