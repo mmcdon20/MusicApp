@@ -4,7 +4,6 @@
 ###############################################################################
 
 def profile_buttons(user_id):
-    relation = user_relation(user_id)
     edit = status = friend = uid = ctype = ''
     
     if auth.user and auth.user.id == user_id:
@@ -14,7 +13,7 @@ def profile_buttons(user_id):
     elif auth.user and auth.user.id != user_id:
         uid = '<INPUT type="hidden" id="user_id" name="user_id" value="{user_id}"/>'.format(**locals())
         aj = "ajax('/{app}/ajax/profileButtons', ['user_id'], 'target');".format(app=request.application)
-        if relation:
+        if user_relation(user_id):
             friend = '<a class="btn" role="button" onclick="{aj}">Remove friend</a>'.format(**locals())
         else:
             friend = '<a class="btn btn-primary" role="button" onclick="{aj}">Add friend</a>'.format(**locals())
