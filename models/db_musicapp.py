@@ -33,7 +33,12 @@ db.define_table('relationship',
 db.define_table('post_like',
                 Field('post', db.post, readable=False, writable=False),
                 Field('status', 'string', requires=IS_IN_SET(STATUS)),
-                 auth.signature
+                auth.signature
+)
+
+db.define_table('post_fave',
+                Field('post', db.post, readable=False, writable=False),
+                auth.signature
 )
 
 db.define_table('profile_info',
@@ -42,7 +47,7 @@ db.define_table('profile_info',
                  Field('birthdate', 'date'),
                  Field('user_location', 'string'),
                  Field('genres', 'string'),
-                 Field( 'picture', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png'))))
+                 Field('picture', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png'))))
 )
 
 db.define_table('user_status',

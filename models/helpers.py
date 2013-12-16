@@ -101,7 +101,8 @@ def music_item(post):
     """.format(**locals()))
 
 def music_item_status_buttons(post):
-    record = db((db.post_like.post == post.id) & (db.post_like.created_by == auth.user.id)).select()
+    record = post_like_status(post.id)
+    faves = post_fave_status(post.id)
     
     if not record:
         likestyle    = 'btn'
@@ -113,16 +114,31 @@ def music_item_status_buttons(post):
         likestyle    = 'btn'
         dislikestyle = 'btn btn-primary'
     
+    if not faves:
+        favestyle    = 'btn'
+    else:
+        favestyle    = 'btn btn-primary'
+    
     like_icon = I(_class='icon-thumbs-up')
     dislike_icon = I(_class='icon-thumbs-down')
     fave_icon = I(_class='icon-heart')
-    
-    like_btn = str(A(like_icon, _class=likestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Like"' + ');'))
-    dislike_btn = str(A(dislike_icon, _class=dislikestyle, _onclick='changeStatus(' + str(post.id) + ',' + '"Dislike"' + ');'))
-    fave_btn = str(A(fave_icon, _class='btn'))
-    btn_id = 'button' + str(post.id)
+    target = "button" + str(post.id)
+    app = request.application
 
-    return '<div id="' + btn_id + '" class="btn-group">' + like_btn + dislike_btn + fave_btn + '</div>'
+    id = "jQuery('#post_id').val('{post}');".format(post=post.id)
+    aj = "ajax('/{app}/ajax/{method}', ['post_id'], '{target}');"
+
+    like_btn = str(A(like_icon, _class=likestyle, _onclick=id+aj.format(app=app, target=target, method='likeButton')))
+    dislike_btn = str(A(dislike_icon, _class=dislikestyle, _onclick=id+aj.format(app=app, target=target, method='dislikeButton')))
+    fave_btn = str(A(fave_icon, _class=favestyle, _onclick=id+aj.format(app=app, target=target, method='faveButton')))
+    
+    return XML("""
+    <div id="{target}" class="btn-group">
+        {like_btn}
+        {dislike_btn}
+        {fave_btn}
+    </div>
+    """.format(**locals()))
 
 def music_item_list(posts):
     x = '<div class="post-container"><ul class="media-list">'

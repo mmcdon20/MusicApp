@@ -145,19 +145,8 @@ sheets -->
   </div> <!-- /container -->
 
 {{include 'modal/layout.html'}}    
-    
-<script>
-    var changeStatus = function(commentid, status) {
-        $.ajax({
-              type: "POST",
-              url: "{{=URL('ajax','changeStatus')}}",
-              data: { commentid: commentid, status: status }
-            })
-        .done(function( msg ) {
-            location.reload();
-        });
-    }
-</script>
+<!-- target for post buttons to set id to before doing an ajax call -->
+<INPUT type="hidden" id="post_id" name="post_id"/>
     
     
   <!-- The javascript =============================================

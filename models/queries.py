@@ -77,5 +77,11 @@ def friend_comments(user_id):
 def post_comments(post_id):
     return db(db.comment_item.item_id==post_id).select()
 
+def post_like_status(post_id):
+    return db((db.post_like.post == post_id) & (db.post_like.created_by == auth.user.id)).select()
+
+def post_fave_status(post_id):
+    return db((db.post_fave.post == post_id) & (db.post_fave.created_by == auth.user.id)).select()
+
 def recent_posts(start, count):
     return db(db.post).select(orderby=~db.post.created_on, limitby=(start,start+count))

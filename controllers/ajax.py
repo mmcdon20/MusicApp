@@ -1,21 +1,4 @@
 # coding: utf8
-# eventually we will need to convert these to proper ajax calls
-
-def changeStatus():
-    id = request.post_vars.commentid
-    post = db.post(id)
-    new_status = request.post_vars.status
-    
-    record = db((db.post_like.post == id) & (db.post_like.created_by == auth.user.id)).select()
-
-    if not record:
-        db.post_like.insert(post=id, status=new_status)
-    elif record[0].status == new_status:
-        db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).delete()
-    else:
-        db((db.post_like.post==id) & (db.post_like.created_by==auth.user.id)).update(status=new_status)
-
-    return locals()
 
 def profileButtons():
     user_id = request.vars.user_id
@@ -27,3 +10,30 @@ def profileButtons():
         db.relationship.insert(person=user_id, status='request')
         
     return profile_buttons(user_id)
+
+def postButtons(post_id,action):
+    post    = db.post(post_id)
+    record  = post_like_status(int(post_id))
+    faves   = post_fave_status(int(post_id))
+    
+    if action == 'Fave' and faves:
+        db((db.post_fave.post==post_id) & (db.post_fave.created_by==auth.user.id)).delete()
+    elif action == 'Fave':
+        db.post_fave.insert(post=post_id)
+    elif not record: # checks for Like/Dislike
+        db.post_like.insert(post=post_id, status=action)
+    elif record[0].status == action:
+        db((db.post_like.post==post_id) & (db.post_like.created_by==auth.user.id)).delete()
+    else:
+        db((db.post_like.post==post_id) & (db.post_like.created_by==auth.user.id)).update(status=action)
+
+    return music_item_status_buttons(post)
+
+def likeButton():
+    return postButtons(request.vars.post_id, 'Like')
+ 
+def dislikeButton():
+    return postButtons(request.vars.post_id, 'Dislike')
+
+def faveButton():
+    return postButtons(request.vars.post_id, 'Fave')
