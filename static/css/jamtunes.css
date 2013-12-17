@@ -171,3 +171,7 @@ div.content {
 
 /* Fix for icons in tab css */
 .nav-tabs > .active > a > [class^="icon-"],.nav-tabs>.active>a>[class*=" icon-"] { background-image:url("../images/glyphicons-halflings.png") !important; }
+
+.nav-tabs span.tab-count {
+    color: gray;
+}
