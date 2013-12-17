@@ -48,6 +48,7 @@ if search_form.process().accepted:
     redirect(URL("search", vars=dict(query=search_form.vars.query)))
 
 if upload_form.process().accepted:
+    db.post_like.insert(post=upload_form.vars.id,status='Like')
     redirect(URL("post", args=upload_form.vars.id))
 
 if not auth.user:
