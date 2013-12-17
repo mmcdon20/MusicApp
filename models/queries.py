@@ -61,6 +61,12 @@ def user_relation(user_id):
               (db.relationship.created_by==auth.user.id)
               ).select().first() or None
 
+def user_following(user_id):
+    return db(db.relationship.created_by==user_id).count()
+
+def user_followers(user_id):
+    return db(db.relationship.person==user_id).count()
+
 def friend_relations(user_id):
     return db(db.relationship.created_by == user_id).select()
 

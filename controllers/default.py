@@ -43,6 +43,8 @@ def profile():
     info      = user_info(user_id)
     uploads   = user_uploads(user_id)
     status    = user_status(user_id)
+    followers = user_followers(user_id)
+    following = user_following(user_id)
     relations = friend_relations(user_id)
     score     = user_jams(user_id) - user_cans(user_id)
     age       = prettydate(info.birthdate).replace(' years ago', '')

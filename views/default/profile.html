@@ -17,8 +17,13 @@
             <tr><th>Gender:</th><td>{{=info.gender or 'N/A'}}</td></tr>
             <tr><th>Location:</th><td>{{=info.user_location or 'N/A'}}</td></tr>
             <tr><th>Genres:</th><td>{{=info.genres or 'N/A'}}</td></tr>
+        </table>
+        
+        <table class="table table-condensed table-bordered table-hover">
             <tr><th>Jam Power:</th><td>{{=score}}</td></tr>
             <tr><th>Total Tunes:</th><td>{{=len(uploads)}}</td></tr>
+            <tr><th>Following:</th><td>{{=following}}</td></tr>
+            <tr><th>Followers:</th><td>{{=followers}}</td></tr>
         </table>
         
         {{=profile_buttons(user_id)}}
