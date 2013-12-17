@@ -19,6 +19,10 @@ def search():
     people  = search_jammers(query)
     results_count = count_search_jams(query)
     people_count  = count_search_jammers(query)
+    # Not sure is hacky
+    showPeopleTab = False
+    if results_count == 0 and people_count != 0:
+        showPeopleTab = True
     search_form.custom.widget.query['_value']= query
     return locals()
 

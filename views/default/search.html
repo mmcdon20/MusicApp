@@ -11,18 +11,18 @@
     <div class="span9">
         <div class="tabbable tabs-top">
             <ul class="nav nav-tabs" data-tabs="tabs">
-                <li class="active"><a data-toggle="tab" href="#jam"><i class="icon-music"></i> Jams</a></li>
-                <li><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Jammers</a></li>
+                <li class="{{='' if showPeopleTab else 'active'}}"><a data-toggle="tab" href="#jam"><i class="icon-music"></i> Jams</a></li>
+                <li class="{{='active' if showPeopleTab else ''}}"><a data-toggle="tab" href="#jammer"><i class="icon-user"></i> Jammers</a></li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane active" id="jam">
+                <div class="tab-pane {{='' if showPeopleTab else 'active'}}" id="jam">
                     {{if results:}}
                         {{=music_item_list(results)}}
                     {{else:}}
                         No jams matched your search.
                     {{pass}}                     
                 </div>
-                <div class="tab-pane" id="jammer">
+                <div class="tab-pane {{='active' if showPeopleTab else ''}}" id="jammer">
                     {{if people:}}
                         {{=person_item_list_no_relation(people)}}
                     {{else:}}
