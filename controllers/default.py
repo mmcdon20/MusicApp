@@ -81,14 +81,6 @@ def profile():
         
     return locals()
 
-@auth.requires_login()
-def friends():
-    user_id   = auth.user.id
-    relations = friend_relations(user_id)
-    uploads   = friend_uploads(user_id)
-    comments  = friend_comments(user_id)
-    return locals()
-
 def genre():
     genre = request.args(0).replace('_',' ')
     posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
