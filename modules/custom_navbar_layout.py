@@ -54,9 +54,6 @@ def navbar(auth_navbar):
         li_profile = LI(A(I(_class="icon-home"), ' ',
                           current.T("Profile"),
                           _href=URL("profile"), _rel="nofollow"))
-        li_friends = LI(A(I(_class="icon-user"), ' ',
-                          current.T("Friends"),
-                          _href=URL("friends"), _rel="nofollow"))
         li_upload = LI(A(I(_class="icon-upload"), ' ',
                           current.T("Upload"),
                           _href="#uploadModal", 
@@ -73,7 +70,6 @@ def navbar(auth_navbar):
                          current.T("logout"),
                          _href=bar["logout"], _rel="nofollow"))
         dropdown = UL(li_profile,
-                      li_friends,
                       li_password,
                       LI('', _class="divider"),
                       li_about,
