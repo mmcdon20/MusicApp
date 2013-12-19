@@ -49,7 +49,7 @@
                     {{=person_item_list(relations, user_id)}}
                 </div>
                 {{if auth.user and auth.user.id == user_id:}}
-                    <div class="tab-pane active" id="friend_jams">
+                    <div class="tab-pane" id="friend_jams">
                         {{=music_item_list(friends_uploads)}}                  
                     </div>
                     <div class="tab-pane" id="friend_comments">
