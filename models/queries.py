@@ -80,6 +80,11 @@ def friend_comments(user_id):
               (db.relationship.person == db.comment_item.created_by)
               ).select(db.comment_item.ALL, orderby=~db.comment_item.created_on, distinct=True)
 
+def friend_statuses(user_id):
+    return db((db.relationship.created_by == user_id)&
+              (db.relationship.person == db.user_status.created_by)
+              ).select(db.user_status.ALL, orderby=~db.user_status.created_on, distinct=True)
+
 def post_comments(post_id):
     return db(db.comment_item.item_id==post_id).select()
 
