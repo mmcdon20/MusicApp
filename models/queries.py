@@ -82,7 +82,7 @@ def friend_comments(user_id):
 
 def friend_statuses(user_id):
     return db((db.relationship.created_by == user_id)&
-              (db.relationship.person == db.user_status.created_by)
+              (db.relationship.person == db.user_status.person)
               ).select(db.user_status.ALL, orderby=~db.user_status.created_on, distinct=True)
 
 def post_comments(post_id):

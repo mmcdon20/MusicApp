@@ -56,6 +56,7 @@ def profile():
     if auth.user and auth.user.id == user_id:
         friends_uploads   = friend_uploads(user_id)
         friends_comments  = friend_comments(user_id)
+        friends_statuses  = friend_statuses(user_id)
         
         edit_form = SQLFORM(db.profile_info,
                             record = db(db.profile_info.person==user_id).select().first(),
