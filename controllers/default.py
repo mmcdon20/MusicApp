@@ -57,15 +57,15 @@ def profile():
         friends_uploads   = friend_uploads(user_id)
         friends_comments  = friend_comments(user_id)
         friends_statuses  = friend_statuses(user_id)
-        
+
         edit_form = SQLFORM(db.profile_info,
                             record = db(db.profile_info.person==user_id).select().first(),
                             fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
                             submit_button = 'Save Changes')
         status_form = SQLFORM(db.user_status,
-                              record = db(db.user_status.person==user_id).select().first(),
                               fields = ['body'],
                               submit_button='Update Status')
+        status_form.custom.widget.body['_value']= status
         edit_form.custom.submit['_class'] = 'btn-primary'
         status_form.custom.submit['_class'] = 'btn-primary'
         

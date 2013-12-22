@@ -44,7 +44,7 @@ def user_uploads(user_id):
     return db(db.post.created_by == user_id).select()
 
 def user_status(user_id):
-    return db(db.user_status.person==user_id).select().first().body
+    return db(db.user_status.person==user_id).select(orderby=~db.user_status.created_on).first().body
 
 def user_jams(user_id):
     return db((db.post_like.post==db.post.id) &
