@@ -48,7 +48,7 @@
                 {{if auth.user and auth.user.id == user_id:}}
                     <div class="tab-pane" id="friend_jams">{{=music_item_list(friends_uploads)}}</div>
                     <div class="tab-pane" id="friend_comments">{{=comment_item_list(friends_comments)}}</div>
-                    <div class="tab-pane" id="friend_statuses">{{=friends_statuses}}</div>
+                    <div class="tab-pane" id="friend_statuses">{{=status_item_list(friends_statuses)}}</div>
                 {{pass}}
             </div>
         </div>        

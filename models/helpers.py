@@ -61,6 +61,31 @@ def comment_item(comment):
         </li>
     """.format(**locals()))
 
+def status_item(status):
+    text = status.body
+    name = fullname(status.person)
+    date = prettydate(status.created_on)
+    userlink = A(name,_href=URL('profile',args=status.person))
+    info = db(db.profile_info.person==status.person).select().first()
+
+    if info.picture:
+        imageref = URL('download', args=info.picture)
+    else:
+        imageref = URL('static', 'images/user_placeholder.jpg')
+
+    return XML("""
+        <li class="media">
+            <div class="pull-left">
+                <img class="media-object" height="50" width="50" src="{imageref}" />
+            </div>
+            <div class="media-body">
+                {text}
+                <br />
+                {userlink} / {date}
+            </div>
+        </li>
+    """.format(**locals()))
+
 def music_item(post):
 
     name        = fullname(post.created_by)
@@ -155,6 +180,16 @@ def comment_item_list(comments):
 
     for comment in comments:
         x += comment_item(comment)
+
+    x += '</ul></div>'
+
+    return XML(x)
+
+def status_item_list(statuses):
+    x = '<div class=""><ul class="media-list">'
+
+    for status in statuses:
+        x += status_item(status)
 
     x += '</ul></div>'
 
