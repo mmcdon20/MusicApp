@@ -67,6 +67,10 @@ def user_following(user_id):
 def user_followers(user_id):
     return db(db.relationship.person==user_id).count()
 
+def user_favorites(user_id):
+    return db((db.post_fave.created_by == user_id)&
+              (db.post_fave.post == db.post.id)).select(db.post.ALL)
+
 def friend_relations(user_id):
     return db(db.relationship.created_by == user_id).select()
 
