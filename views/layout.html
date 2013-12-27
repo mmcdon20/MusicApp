@@ -83,17 +83,11 @@ sheets -->
           
         {{=response.logo or ''}} 
         <div class="nav-collapse">
-          <!--{{if response.menu:}}
-            {{=MENU(response.menu, _class='mobile-menu nav',mobile=is_mobile,li_class='dropdown',ul_class='dropdown-menu')}}
-          {{pass}}-->
-          
           {{=search_form.custom.begin}}
             {{=search_form.custom.widget.query}}
           {{=search_form.custom.end}} 
-            
           <ul id="navbar" class="nav pull-right">{{='auth' in globals() and custom.navbar(auth.navbar(mode='bare')) or ''}}</ul>
         </div>
-            
       </div>
     </div>
   </div><!--/top navbar -->
