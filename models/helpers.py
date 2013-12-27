@@ -63,10 +63,10 @@ def comment_item(comment):
 
 def status_item(status):
     text = status.body
-    name = fullname(status.person)
+    name = fullname(status.created_by)
     date = prettydate(status.created_on)
-    userlink = A(name,_href=URL('profile',args=status.person))
-    info = db(db.profile_info.person==status.person).select().first()
+    userlink = A(name,_href=URL('profile',args=status.created_by))
+    info = db(db.profile_info.person==status.created_by).select().first()
 
     if info.picture:
         imageref = URL('download', args=info.picture)

@@ -51,9 +51,8 @@ db.define_table('profile_info',
 )
 
 db.define_table('user_status',
-                Field('person', db.auth_user, readable=False, writable=False, default=auth.user),
-                Field('created_on', 'datetime', default=request.now),
-                Field('body', 'string', requires=IS_NOT_EMPTY())
+                Field('body', 'string', requires=IS_NOT_EMPTY()),
+                auth.signature
 )
 
 ###############################################################################

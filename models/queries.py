@@ -44,7 +44,7 @@ def user_uploads(user_id):
     return db(db.post.created_by == user_id).select()
 
 def user_status(user_id):
-    return db(db.user_status.person==user_id).select(orderby=~db.user_status.created_on).first().body
+    return db(db.user_status.created_by==user_id).select(orderby=~db.user_status.created_on).first().body
 
 def user_jams(user_id):
     return db((db.post_like.post==db.post.id) &
@@ -86,7 +86,7 @@ def friend_comments(user_id):
 
 def friend_statuses(user_id):
     return db((db.relationship.created_by == user_id)&
-              (db.relationship.person == db.user_status.person)
+              (db.relationship.person == db.user_status.created_by)
               ).select(db.user_status.ALL, orderby=~db.user_status.created_on, distinct=True)
 
 def post_comments(post_id):
