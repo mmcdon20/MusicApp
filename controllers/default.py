@@ -60,7 +60,7 @@ def profile():
         friends_statuses  = friend_statuses(user_id)
 
         edit_form = SQLFORM(db.profile_info,
-                            record = db(db.profile_info.person==user_id).select().first(),
+                            record = db(db.profile_info.created_by==user_id).select().first(),
                             fields = ['birthdate', 'gender', 'user_location', 'genres', 'picture'],
                             submit_button = 'Save Changes')
         status_form = SQLFORM(db.user_status,

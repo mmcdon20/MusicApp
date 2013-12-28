@@ -35,7 +35,7 @@ setup_tune_menu()
 
 auth.settings.login_next = URL('profile')
 auth.settings.register_next = URL('profile')
-auth.settings.register_onaccept.append(lambda form: db.profile_info.insert(person=form.vars.id))
+auth.settings.register_onaccept.append(lambda form: db.profile_info.insert())
 auth.settings.register_onaccept.append(lambda form: db.user_status.insert(body="Some things are better left unsaid"))
 
 search_form  = SQLFORM.factory(Field('query','string'), _class='navbar-search pull-left')

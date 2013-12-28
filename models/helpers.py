@@ -41,7 +41,7 @@ def comment_item(comment):
     date = prettydate(comment.created_on)
     userlink = A(name,_href=URL('profile',args=comment.created_by))
     postlink = A("link",_href=URL('post',args=comment.item_id))
-    info = db(db.profile_info.person==comment.created_by).select().first()
+    info = db(db.profile_info.created_by==comment.created_by).select().first()
 
     if info.picture:
         imageref = URL('download', args=info.picture)
@@ -66,7 +66,7 @@ def status_item(status):
     name = fullname(status.created_by)
     date = prettydate(status.created_on)
     userlink = A(name,_href=URL('profile',args=status.created_by))
-    info = db(db.profile_info.person==status.created_by).select().first()
+    info = db(db.profile_info.created_by==status.created_by).select().first()
 
     if info.picture:
         imageref = URL('download', args=info.picture)
@@ -221,10 +221,10 @@ def person_item_list(relations, user_id):
 
 def person_item(person):
     # If user has no profile, create one.
-    info = db(db.profile_info.person==person.id).select().first()
+    info = db(db.profile_info.created_by==person.id).select().first()
     if info is None:
         db.profile_info.insert(person=person.id)
-        info = db(db.profile_info.person==person.id).select().first()
+        info = db(db.profile_info.created_by==person.id).select().first()
 
     name        = fullname(person.id)
     profileRef  = URL('profile', args=person.id)

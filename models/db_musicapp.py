@@ -42,12 +42,12 @@ db.define_table('post_fave',
 )
 
 db.define_table('profile_info',
-                 Field('person', db.auth_user, readable=False, writable=False),
-                 Field('gender', 'string', requires=IS_NULL_OR(IS_IN_SET(GENDERS))),
-                 Field('birthdate', 'date'),
-                 Field('user_location', 'string'),
-                 Field('genres', 'string'),
-                 Field('picture', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png'))))
+                Field('gender', 'string', requires=IS_NULL_OR(IS_IN_SET(GENDERS))),
+                Field('birthdate', 'date'),
+                Field('user_location', 'string'),
+                Field('genres', 'string'),
+                Field('picture', 'upload', requires=IS_NULL_OR(IS_IMAGE(extensions=('jpeg', 'png')))),
+                auth.signature
 )
 
 db.define_table('user_status',

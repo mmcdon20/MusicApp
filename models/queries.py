@@ -38,7 +38,7 @@ def user_account(user_id):
     return db.auth_user(user_id)
 
 def user_info(user_id):
-    return db(db.profile_info.person==user_id).select().first()
+    return db(db.profile_info.created_by==user_id).select().first()
 
 def user_uploads(user_id):
     return db(db.post.created_by == user_id).select()
