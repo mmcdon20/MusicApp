@@ -7,7 +7,7 @@ def profileButtons():
     if relation:
         db(db.relationship.id == relation.id).delete()
     else:
-        db.relationship.insert(person=user_id, status='request')
+        db.relationship.insert(person=user_id)
         
     return profile_buttons(user_id)
 

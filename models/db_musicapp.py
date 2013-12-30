@@ -3,7 +3,6 @@
 #                        Table Definitions                                #
 ###########################################################################
 GENRES=['Classic Rock', 'Rap', 'Pop', 'Classical', 'Blues', 'Jazz', 'Metal', 'Punk', 'Electronic']
-RELATION=['friend', 'request', 'block']
 GENDERS=['Male', 'Female']
 STATUS=['Like', 'Dislike']
 
@@ -26,7 +25,6 @@ db.define_table('comment_item',
 
 db.define_table('relationship',
                 Field('person', db.auth_user),
-                Field('status', 'string', requires=IS_IN_SET(RELATION)),
                 auth.signature
 )
 
