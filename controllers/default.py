@@ -83,11 +83,6 @@ def profile():
         
     return locals()
 
-def genre():
-    genre = request.args(0).replace('_',' ')
-    posts = db(db.post.genre==genre).select(orderby=~db.post.created_on)
-    return locals()
-
 def post():
     post_id = request.args(0, cast=int)
     post = db.post(post_id)
