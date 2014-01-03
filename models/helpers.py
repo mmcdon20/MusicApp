@@ -90,7 +90,7 @@ def music_item(post):
 
     name        = fullname(post.created_by)
     postref     = URL('post',args=post.id)
-    genrelink   = A(post.genre, _href=URL('genre', args=post.genre))
+    genrelink   = A(post.genre, _href=URL('search', vars=dict(query=post.genre)))
     postlink    = A(post.title + " by " + post.artist, _href=postref)
     date        = prettydate(post.created_on)
     userlink    = A(name,_href=URL('profile',args=post.created_by))
