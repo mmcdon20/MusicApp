@@ -11,4 +11,4 @@ GitHub
 https://github.com/mmcdon20/MusicApp
 
 Pythonanywhere
-https://jamtunes.pythonanywhere.com/jamtunes/
+https://tunejam.pythonanywhere.com/jam
