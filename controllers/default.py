@@ -54,7 +54,6 @@ def profile():
     age       = prettydate(info.birthdate).replace(' years ago', '')
 
     if auth.user and auth.user.id == user_id:
-        users_favorites   = user_favorites(user_id)
         friends_uploads   = friend_uploads(user_id)
         friends_comments  = friend_comments(user_id)
         friends_statuses  = friend_statuses(user_id)
